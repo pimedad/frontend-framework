@@ -10,6 +10,14 @@
 
 ## Design Principles
 
+DotJS is guided by these core ideas:
+
+1.  **Simplicity:** A minimal and intuitive API. We favor clarity over feature bloat.
+2.  **Developer Control:** Understandable and predictable behavior. No hidden magic, what you see is what you get.
+3.  **Vanilla First:** Built on standard browser APIs, avoiding external framework dependencies.
+4.  **Inversion of Control:** As a framework, DotJS calls your code (like component functions) to construct the application.
+5.  **Progressive Enhancement:** Start with the basics and build up complexity as needed.
+
 ## Best Practices
 
 ## Features & Examples
