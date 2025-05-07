@@ -1,0 +1,12 @@
+{
+  "name": "dot-framework-example",
+  "version": "0.0.1",
+  "description": "Example application using the DotJS framework.",
+  "private": true,
+  "scripts": {
+    "start": "live-server ."
+  },
+  "devDependencies": {
+    "live-server": "^1.2.2"
+  }
+}

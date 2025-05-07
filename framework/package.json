@@ -1,0 +1,7 @@
+{
+  "name": "dot-framework",
+  "version": "0.0.1",
+  "description": "The DotJS frontend framework.",
+  "main": "src/dot.js",
+  "private": true
+}
