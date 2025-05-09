@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { h, DOM_TYPES } from "../h.js";
+import { h, hString, DOM_TYPES } from "../h.js";
 
 describe("h.js", () => {
   describe("h()", () => {
@@ -78,6 +78,16 @@ describe("h.js", () => {
       const vNode = h("section");
       expect(vNode.props).toEqual({});
       expect(vNode.children).toEqual([]);
+    });
+  });
+
+  describe("hString()", () => {
+    it("should create a virtual text node", () => {
+      const textVNode = hString("Hello");
+      expect(textVNode).toEqual({
+        type: DOM_TYPES.TEXT,
+        value: "Hello",
+      });
     });
   });
 });
