@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { h, hString, DOM_TYPES } from "../h.js";
+import { h, hString, hFragment, DOM_TYPES } from "../h.js";
 
 describe("h.js", () => {
   describe("h()", () => {
@@ -88,6 +88,43 @@ describe("h.js", () => {
         type: DOM_TYPES.TEXT,
         value: "Hello",
       });
+    });
+  });
+
+  describe("hFragment()", () => {
+    it("should create a virtual fragment node", () => {
+      const child1 = h("p", {}, ["Child 1"]);
+      const child2 = hString("Child 2");
+      const fragmentVNode = hFragment([child1, child2]);
+
+      expect(fragmentVNode).toEqual({
+        type: DOM_TYPES.FRAGMENT,
+        children: [child1, child2],
+      });
+    });
+
+    it("should map string children within a fragment to text nodes", () => {
+      const fragmentVNode = hFragment(["Text child", h("span")]);
+      expect(fragmentVNode.children).toEqual([
+        { type: DOM_TYPES.TEXT, value: "Text child" },
+        h("span"),
+      ]);
+    });
+
+    it("should filter out null or undefined children in a fragment", () => {
+      const fragmentVNode = hFragment([
+        "Hello",
+        null,
+        h("span"),
+        undefined,
+        "World",
+      ]);
+      expect(fragmentVNode.children.length).toBe(3);
+    });
+
+    it("should handle an empty array of children for a fragment", () => {
+      const fragmentVNode = hFragment([]);
+      expect(fragmentVNode.children).toEqual([]);
     });
   });
 });
