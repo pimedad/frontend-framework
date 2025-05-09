@@ -15,6 +15,10 @@ export function h(tag, props = {}, children = []) {
   };
 }
 
+export function hString(str) {
+  return { type: DOM_TYPES.TEXT, value: str };
+}
+
 function mapTextNodes(children) {
   return children.map((child) => {
     typeof child === "string" ? hString(child) : child;
