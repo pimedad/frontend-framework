@@ -23,8 +23,14 @@ export function mountDOM(vdom, parentEl) {
   }
 }
 
-// TODO: implement createTextNode()
-function createTextNode() {}
+function createTextNode(vdom, parentEl) {
+  const { value } = vdom;
+
+  const textNode = document.createTextNode(value);
+  vdom.el = textNode;
+
+  parentEl.append(textNode);
+}
 
 // TODO: implement createElementNode()
 function createElementNode() {}
