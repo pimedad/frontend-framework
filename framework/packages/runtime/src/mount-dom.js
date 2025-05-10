@@ -35,5 +35,9 @@ function createTextNode(vdom, parentEl) {
 // TODO: implement createElementNode()
 function createElementNode() {}
 
-// TODO: implement createFragmentNodes()
-function createFragmentNodes() {}
+function createFragmentNodes(vdom, parentEl) {
+  const { children } = vdom;
+  vdom.el = parentEl;
+
+  children.forEach((child) => mountDOM(child, parentEl));
+}
