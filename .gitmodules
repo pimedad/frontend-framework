@@ -1,0 +1,3 @@
+[submodule "ff-requirements"]
+	path = ff-requirements
+	url = https://github.com/karlromets/ff-requirements.git
