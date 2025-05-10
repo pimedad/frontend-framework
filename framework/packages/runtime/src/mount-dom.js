@@ -43,6 +43,13 @@ function createElementNode(vdom, parentEl) {
   parentEl.append(element);
 }
 
+function addProps(el, props, vdom) {
+  const { on: events, ...attrs } = props;
+
+  vdom.listeners = addEventListeners(events, el);
+  setAttributes(el, attrs);
+}
+
 function createFragmentNodes(vdom, parentEl) {
   const { children } = vdom;
   vdom.el = parentEl;
