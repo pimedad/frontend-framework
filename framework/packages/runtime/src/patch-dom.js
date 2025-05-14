@@ -8,7 +8,7 @@ import { arraysDiff, arraysDiffSequence, ARRAY_DIFF_OP } from "./utils/arrays";
 import { objectsDiff } from "./utils/objects";
 import { isNotBlankOrEmptyString } from './utils/strings';
 
-export function patchDOM(oldVdom, newVdom, parentEl) {
+export function patchDOM(oldVdom, newVdom, parentEl, hostComponent = null) {
   if (!areNodesEqual(oldVdom, newVdom)) {
     const index = findIndexInParent(parentEl, oldVdom.el);
     destroyDOM(oldVdom);
@@ -30,12 +30,12 @@ export function patchDOM(oldVdom, newVdom, parentEl) {
     }
   }
 
-  patchChildren(oldVdom, newVdom);
+  patchChildren(oldVdom, newVdom, hostComponent);
   
   return newVdom;
 }
 
-function patchChildren(oldVdom, newVdom) {
+function patchChildren(oldVdom, newVdom, hostComponent) {
   const oldChildren = extractChildren(oldVdom);
   const newChildren = extractChildren(newVdom);
   const parentEl = oldVdom.el;
@@ -44,10 +44,11 @@ function patchChildren(oldVdom, newVdom) {
 
   for (const operation of diffSeq) {
     const { originalIndex, index, item } = operation;
+    const offset = hostComponent?.offset ?? 0;
 
     switch (operation.op) {
       case ARRAY_DIFF_OP.ADD: {
-        mountDOM(item, parentEl, index);
+        mountDOM(item, parentEl, index + offset, hostComponent);
         break;
       };
 
@@ -60,16 +61,16 @@ function patchChildren(oldVdom, newVdom) {
         const oldChild = oldChildren[originalIndex];
         const newChild = newChildren[index];
         const el = oldChild.el;
-        const elAttargetIndex = parentEl.childNodes[index];
+        const elAtTargetIndex = parentEl.childNodes[index + offset];
 
-        parentEl.insertBefore(el, elAttargetIndex);
-        patchDOM(oldChild, newChild, parentEl);
+        parentEl.insertBefore(el, elAtTargetIndex);
+        patchDOM(oldChild, newChild, parentEl, hostComponent);
 
         break;
       };
 
       case ARRAY_DIFF_OP.NOOP: {
-        patchDOM(oldChildren[originalIndex], newChildren[index], parentEl);
+        patchDOM(oldChildren[originalIndex], newChildren[index], parentEl, hostComponent);
         break;
       };
     }
