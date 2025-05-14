@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" data-framework="javascript-es6">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="description" content="A task management app by the Blind Dating App Team using JavaScript ES6." />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="icon" type="image/png" href="https://static-00.iconduck.com/assets.00/todoist-icon-512x512-v3a6dxo9.png">
+    <title>Task List</title>
+</head>
+<body>
+<section class="todoapp">
+    <header class="header">
+        <h1>Tasks</h1>
+        <input class="new-todo" placeholder="What needs to be done?" autofocus />
+    </header>
+    <main class="main">
+        <div class="toggle-all-container">
+            <input id="toggle-all" class="toggle-all" type="checkbox" />
+            <label class="toggle-all-label" for="toggle-all">Mark all tasks as complete</label>
+        </div>
+        <ul class="todo-list"></ul>
+    </main>
+    <footer class="footer">
+        <span class="todo-count"></span>
+        <ul class="filters">
+            <li>
+                <a href="#/" class="selected">All</a>
+            </li>
+            <li>
+                <a href="#/active">Active</a>
+            </li>
+            <li>
+                <a href="#/completed">Completed</a>
+            </li>
+        </ul>
+        <button class="clear-completed">Clear completed</button>
+    </footer>
+</section>
+<footer class="info">
+    <p class="info-edit-instruction">Double-click to edit a task</p>
+    <p class="info-credits">Created by the Blind Dating App Team Ⓒ</p>
+</footer>
+</body>
+</html>
