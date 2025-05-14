@@ -1,0 +1,397 @@
+/* ROOT THEME VARIABLES */
+:root {
+    --background: oklch(0.99 0 0);
+    --foreground: oklch(28.9% 0.003 17.3);
+    --card: oklch(0.99 0 0);
+    --card-foreground: oklch(28.9% 0.003 17.3);
+    --popover: oklch(0.99 0 0);
+    --popover-foreground: oklch(28.9% 0.003 17.3);
+    --primary: oklch(70.1% 0.137 36.4);
+    --primary-foreground: oklch(28.9% 0.003 17.3);
+    --secondary: oklch(84.2% 0.067 170);
+    --secondary-foreground: oklch(28.9% 0.003 17.3);
+    --muted: oklch(0.701 0.137 36.348);
+    --muted-foreground: oklch(0.556 0 0);
+    --accent: oklch(68.4% 0.081 258.3);
+    --accent-foreground: oklch(28.9% 0.003 17.3);
+    --destructive: oklch(63.6% 0.21 25.5);
+    --destructive-foreground: oklch(0.99 0 0);
+    --border: oklch(0.922 0 0);
+    --input: oklch(0.95 0 0);
+    --ring: oklch(47.8% 0.097 258.3);
+    --radius: 0.625rem;
+
+    --chart-1: oklch(0.646 0.222 41.116);
+    --chart-2: oklch(0.6 0.118 184.704);
+    --chart-3: oklch(0.398 0.07 227.392);
+    --chart-4: oklch(0.828 0.189 84.429);
+    --chart-5: oklch(0.769 0.188 70.08);
+
+    --font-sans: 'Rubik', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+/* BASE STYLES */
+body {
+    font-family: var(--font-sans), sans-serif;
+    line-height: 1.6;
+    background: var(--background);
+    color: var(--foreground);
+    min-width: 320px;
+    max-width: 600px;
+    margin: 0 auto;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-weight: 400;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+*:focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 2px;
+}
+
+
+.todoapp {
+    background: var(--card);
+    color: var(--card-foreground);
+    margin: 100px 0 40px 0;
+    position: relative;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1),
+    0 10px 30px rgba(0, 0, 0, 0.05);
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+}
+
+h1 {
+    position: absolute;
+    top: -150px;
+    width: 100%;
+    font-size: 70px;
+    font-weight: 700;
+    text-align: center;
+    color: var(--muted);
+    -webkit-text-rendering: optimizeLegibility;
+    -moz-text-rendering: optimizeLegibility;
+    text-rendering: optimizeLegibility;
+}
+
+/* INPUT FIELD: .new-to-do */
+.new-todo {
+    padding: 20px 20px 20px 60px;
+    border: none;
+    background: var(--input);
+    color: var(--foreground);
+    width: 100%;
+    font-size: 24px;
+    font-family: inherit;
+    font-weight: 300;
+    line-height: 1.4em;
+    box-shadow: inset 0 -2px 1px rgba(0,0,0,0.03);
+    border-bottom: 1px solid var(--border);
+    border-radius: var(--radius) var(--radius) 0 0;
+}
+
+.new-todo::placeholder {
+    font-style: italic;
+    font-weight: 300;
+    color: var(--muted-foreground);
+}
+
+/* MAIN SECTION */
+.main {
+    position: relative;
+    z-index: 2;
+}
+
+/* TOGGLE ALL CHECKBOX */
+.toggle-all-container {
+    position: absolute;
+    top: -70px;
+    left: 10px;
+    width: 45px;
+    height: 45px;
+    text-align: center;
+    z-index: 3;
+}
+
+.toggle-all {
+    opacity: 0;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+}
+.toggle-all-label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    font-size: 0;
+    cursor: pointer;
+}
+
+.toggle-all-label::before {
+    content: '❯';
+    display: inline-block;
+    font-size: 28px;
+    color: var(--muted-foreground);
+    padding: 5px;
+    transform: rotate(90deg);
+    transition: color 0.2s ease-out, transform 0.2s ease-out;
+}
+
+.toggle-all:checked + .toggle-all-label::before {
+    color: var(--primary);
+}
+
+/* TO-DO LIST ITEMS */
+.todo-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.todo-list li {
+    position: relative;
+    font-size: 22px;
+    padding: 18px 15px 18px 60px;
+    border-bottom: 1px solid var(--border);
+    line-height: 1.3;
+    display: flex;
+    align-items: center;
+}
+
+.todo-list li:last-child {
+    border-bottom: none;
+}
+
+.todo-list li .view {
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.todo-list li label {
+    word-break: break-all;
+    padding: 15px;
+    margin-left: 10px;
+    display: block;
+    line-height: 1.2;
+    transition: color 0.4s;
+    flex-grow: 1;
+    color: var(--foreground);
+}
+
+.todo-list li.completed label {
+    color: var(--muted-foreground);
+    text-decoration: line-through;
+}
+
+/* ITEM CHECKBOX (.toggle) */
+.todo-list li .toggle {
+    opacity: 0;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 60px;
+    height: 100%;
+    cursor: pointer;
+    z-index: 2;
+}
+
+.todo-list li .toggle + label {
+    position: relative;
+}
+
+.todo-list li .toggle + label::before {
+    content: '';
+    position: absolute;
+    left: -45px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 30px;
+    height: 30px;
+    border: 1px solid var(--muted);
+    background-color: var(--background);
+    transition: all 0.2s ease-out;
+    border-radius: 15px;
+}
+
+.todo-list li .toggle:checked + label::before {
+    background-color: var(--primary);
+    border-color: var(--primary);
+}
+
+.todo-list li .toggle:checked + label::after {
+    content: '✔';
+    position: absolute;
+    left: -37px;
+    top: 50%;
+    transform: translateY(-50%) scale(0.9);
+    font-size: 20px;
+    color: var(--primary-foreground);
+}
+
+/* DESTROY BUTTON */
+.todo-list li .destroy {
+    display: none;
+    position: absolute;
+    top: 0;
+    right: 10px;
+    bottom: 0;
+    width: 40px;
+    height: 40px;
+    margin: auto 0;
+    font-size: 30px;
+    color: var(--muted-foreground);
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: color 0.2s ease-out;
+}
+
+.todo-list li:hover .destroy {
+    display: block;
+}
+
+.todo-list li .destroy:hover {
+    color: var(--destructive);
+}
+
+/* EDITING STATE */
+.todo-list li .edit {
+    display: none;
+}
+
+.todo-list li.editing {
+    padding: 0;
+    border-bottom: 1px solid var(--border);
+}
+
+.todo-list li.editing .view {
+    display: none;
+}
+
+.todo-list li.editing .edit {
+    display: block;
+    width: 100%;
+    padding: 28px 15px 28px 60px;
+    border: 1px solid var(--primary);
+    box-shadow: inset 0 -1px 5px 0 rgba(0, 0, 0, 0.1);
+    font-size: inherit;
+    font-family: inherit;
+    font-weight: 300;
+    background: var(--input);
+    color: var(--foreground);
+    border-radius: 0;
+}
+
+/* FOOTER */
+.footer {
+    color: var(--muted-foreground);
+    padding: 15px;
+    height: auto;
+    text-align: center;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 16px;
+}
+
+.todo-count {
+    text-align: left;
+}
+
+.filters {
+    margin: 0;
+    padding: 15px;
+    list-style: none;
+}
+
+.filters li {
+    display: inline;
+}
+
+.filters li a {
+    color: var(--muted-foreground);
+    margin: 3px;
+    padding: 5px 10px;
+    text-decoration: none;
+    border: 1px solid transparent;
+    border-radius: 15px;
+    transition: border-color 0.2s ease-out;
+}
+
+.filters li a:hover {
+    border-color: var(--accent);
+}
+
+.filters li a.selected {
+    border-color: var(--primary);
+    color: var(--primary);
+    font-weight: 500;
+}
+
+.clear-completed {
+    background: none;
+    border: none;
+    color: var(--muted-foreground);
+    cursor: pointer;
+    padding: 5px 10px;
+    text-decoration: none;
+    transition: color 0.2s ease-out, background-color 0.2s ease-out;
+    font-size: 14px;
+    font-weight: 200;
+}
+.clear-completed:hover {
+    color: var(--destructive);
+    text-decoration: underline;
+}
+.clear-completed:active {
+    color: var(--destructive-foreground);
+    background-color: var(--destructive);
+}
+
+/* INFO FOOTER */
+.info {
+    margin: 65px auto 20px;
+    width: 100%;
+    text-align: center;
+    color: var(--muted-foreground);
+}
+
+.info-edit-instruction {
+    font-size: 24px;
+    font-weight: 200;
+    color: var(--foreground);
+    margin-bottom: 25px;
+    line-height: 1.5;
+}
+
+.info-credits {
+    font-size: 12px;
+    color: var(--muted-foreground);
+    padding-bottom: 20px;
+    line-height: 1;
+    margin-top: 10px;
+}
+
+.info p {
+    line-height: 1;
+    margin: 15px 0;
+}
+
+.info a {
+    color: inherit;
+    text-decoration: none;
+    font-weight: 400;
+}
+
+.info a:hover {
+    text-decoration: underline;
+}
