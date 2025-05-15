@@ -1,9 +1,10 @@
 import { destroyDOM } from "./destroy-dom";
 import { Dispatcher } from "./dispatcher";
-import { DOM_TYPES, extractChildren } from "./h";
+import { DOM_TYPES, didCreateSlot, extractChildren, resetDidCreateSlot } from "./h";
 import { mountDOM } from "./mount-dom";
 import { patchDOM } from "./patch-dom";
 import { hasOwnProperty } from "./utils/objects";
+import { fillSlots } from "./slots";
 
 const emptyFn = () => {};
 
@@ -16,6 +17,11 @@ export function defineComponent({ render, state, onMounted = emptyFn, onUnmounte
     #parentComponent = null;
     #dispatcher = new Dispatcher();
     #subscriptions = [];
+    #children = [];
+
+    setExternalContent(children) {
+      this.#children = children;
+    }
 
     constructor(props = {}, eventHandlers = {}, parentComponent = null) {
       this.props = props;
@@ -73,7 +79,13 @@ export function defineComponent({ render, state, onMounted = emptyFn, onUnmounte
     }
 
     render() {
-      return render.call(this);
+      const vdom = render.call(this);
+      if (didCreateSlot()) {
+        fillSlots(vdom, this.#children);
+        resetDidCreateSlot();
+      }
+
+      return vdom;
     }
 
     mount(hostEl, index = null) {

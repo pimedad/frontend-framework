@@ -44,8 +44,10 @@ export function patchDOM(oldVdom, newVdom, parentEl, hostComponent = null) {
 
 function patchComponent(oldVdom, newVdom) {
   const { component } = oldVdom;
+  const { children } = newVdom;
   const { props } = extractPropsAndEvents(newVdom);
 
+  component.setExternalContent(children);
   component.updateProps(props);
 
   newVdom.component = component;

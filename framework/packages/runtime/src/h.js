@@ -5,6 +5,7 @@ export const DOM_TYPES = {
   ELEMENT: "element",
   FRAGMENT: "fragment",
   COMPONENT: "component",
+  SLOT: "slot",
 };
 
 export function h(tag, props = {}, children = []) {
@@ -50,4 +51,19 @@ export function extractChildren(vdom) {
   }
 
   return children;
+}
+
+let hSlotCalled = false;
+
+export function didCreateSlot() {
+  return hSlotCalled;
+}
+
+export function resetDidCreateSlot() {
+  hSlotCalled = false;
+}
+
+export function hSlot(children = []) {
+  hSlotCalled = true;
+  return { type: DOM_TYPES.SLOT, children};
 }
