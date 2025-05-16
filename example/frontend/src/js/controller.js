@@ -121,20 +121,11 @@ class Controller {
 
     /** Removes all completed task items. */
     removeCompletedItems() {
-        this.model.read({ completed: true }, (data) => {
-            const completedItems = data || [];
-            if (completedItems.length > 0) {
-                completedItems.forEach(item => {
-                    // model.remove is async, but forEach doesn't wait.
-                    // The _filter(true) after the loop will handle the final UI update.
-                    this.model.remove(item.id, () => {
-                        this.view.render("removeItem", item.id); // Remove each from view as it's confirmed by model.
-                    });
-                });
-                this._filter(true); // Refresh list after attempting all removals.
-            } else {
-                this._filter(); // Still update counts if nothing was removed.
+        this.model.removeAll((error) => {
+            if (error) {
+                console.error("Controller.removeCompletedItems: Error removing items.", error);
             }
+            this._filter(true); // Refresh list after attempting all removals.
         });
     }
 
@@ -159,6 +150,7 @@ class Controller {
      * @param {boolean} targetCompletedState - The desired completed state for all items.
      */
     toggleAll(targetCompletedState) {
+        // Read from the cache to find items that need to change
         this.model.read({ completed: !targetCompletedState }, (itemsToChange) => {
             itemsToChange = itemsToChange || [];
             if (itemsToChange.length === 0) {
@@ -168,8 +160,16 @@ class Controller {
 
             let itemsProcessed = 0;
             itemsToChange.forEach(item => {
-                this.model.update(item.id, { completed: targetCompletedState }, () => {
-                    this.view.render("elementComplete", { id: item.id, completed: targetCompletedState });
+                this.model.update(item.id, { completed: targetCompletedState }, (updatedItemArray, error) => {
+                    if (error) {
+                        console.error(`Controller.toggleAll: Error updating item ${item.id}`, error);
+                    }
+                    if (updatedItemArray && updatedItemArray.length > 0){
+                        this.view.render("elementComplete", { id: item.id, completed: targetCompletedState });
+                    } else if(!error) {
+                        console.warn(`Controller.toggleAll: Update for ${item.id} returned no item.`);
+                    }
+
                     itemsProcessed++;
                     if (itemsProcessed === itemsToChange.length) {
                         this._filter(); // Update UI after all items are processed.
