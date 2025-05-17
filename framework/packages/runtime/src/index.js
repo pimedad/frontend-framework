@@ -1,4 +1,6 @@
-export { createApp } from './app';
+export { createApp } from './app.js';
 export { defineComponent } from './component.js';
-export { h, hFragment, hSlot, hString } from './h';
+export { DOM_TYPES, h, hFragment, hSlot, hString } from './h.js';
+export { RouterLink, RouterOutlet } from './router-components.js';
+export { HashRouter } from './router.js';
 export { nextTick } from './scheduler.js';

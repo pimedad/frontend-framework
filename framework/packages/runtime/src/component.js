@@ -18,6 +18,7 @@ export function defineComponent({ render, state, onMounted = emptyFn, onUnmounte
     #dispatcher = new Dispatcher();
     #subscriptions = [];
     #children = [];
+    #appContext = null;
 
     setExternalContent(children) {
       this.#children = children;
@@ -38,6 +39,14 @@ export function defineComponent({ render, state, onMounted = emptyFn, onUnmounte
       return Promise.resolve(onUnmounted.call(this));
     }
 
+    setAppContext(appContext) {
+      this.#appContext = appContext;
+    }
+
+    get appContext() {
+      return this.#appContext;
+    }
+    
     get elements() {
       if (this.#vdom == null) {
         return [];
