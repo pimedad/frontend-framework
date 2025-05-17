@@ -67,3 +67,7 @@ export function hSlot(children = []) {
   hSlotCalled = true;
   return { type: DOM_TYPES.SLOT, children};
 }
+
+export function isComponent({ tag }) {
+  return typeof tag === 'function';
+}
