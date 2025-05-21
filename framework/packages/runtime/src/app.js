@@ -10,7 +10,8 @@ export function createApp(RootComponent, props = {}, options = {}) {
 
   const context = {
     router: options.router || new NoopRouter(),
-  }
+    ...(props.context || {})
+  };
 
   function reset() {
     parentEl = null;
@@ -22,7 +23,7 @@ export function createApp(RootComponent, props = {}, options = {}) {
     mount(_parentEl) {
       if (isMounted) {
         throw new Error('The application is already mounted');
-      };
+      }
 
       parentEl = _parentEl;
       vdom = h(RootComponent, props);
