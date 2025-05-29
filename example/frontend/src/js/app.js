@@ -15,5 +15,5 @@ const routes = [
 ];
 const router = new HashRouter(routes);
 
-const app = createApp(AppRoot, { store: store }, { router });
+const app = createApp(AppRoot, { context: { store: store } }, { router });
 app.mount(document.querySelector(".todoapp"));
