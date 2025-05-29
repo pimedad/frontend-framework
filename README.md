@@ -128,7 +128,7 @@ The framework’s documentation is split into core features and utility helpers,
 - **[Props (`propsDocumentation.md`)](./framework/packages/runtime/src/utils/documentation/propsDocumentation.md)**: Helpers for managing component props.
 - **[Strings (`stringsDocumentation.md`)](./framework/packages/runtime/src/utils/documentation/stringsDocumentation.md)**: Utilities for string operations.
 
-> **Tip**: Each documentation file includes code examples and best practices to help you implement features effectively.
+> **Tip**: Each [Documentation](#documentation) file includes code examples and best practices to help you implement features effectively.
 
 ---
 ## Examples
@@ -184,7 +184,7 @@ To build applications with DotJS, follow these guidelines:
 8. **Project Structure**: Organize components, routes, and utilities in separate folders (e.g., `components/`, `routes/`).
 9. **Testing**: Test components in isolation and verify routing behavior with `navigateTo`.
 
-> **Details**: Each documentation file includes module-specific best practices.
+> **Details**: Each [Documentation](#documentation) file includes module-specific best practices.
 
 ---
 
