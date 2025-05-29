@@ -35,6 +35,10 @@ export const RouterOutlet = defineComponent({
     })
 
     this.updateState({ subscription });
+
+    if (this.appContext.router.matchedRoute) {
+      this.updateState({ matchedRoute: this.appContext.router.matchedRoute });
+    }
   },
 
   onUnmounted() {
