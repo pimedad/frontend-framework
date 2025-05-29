@@ -14,7 +14,7 @@ an event handler because when we use the `destroyDOM()` method (as you can find 
 `removeEventListener()` method.
 
 # The addEventListener() function 
-```
+```javascript
 export function addEventListener(eventName, handler, el, hostComponent = null) {
   function boundHandler() {
     hostComponent ? handler.apply(hostComponent, arguments) : handler(...arguments);
@@ -31,7 +31,7 @@ The `addEventListener()` function attaches a single event listener to a DOM elem
 This function is important because it lets your webpage interact with users. It creates a special version of the event handler (called `boundHandler`) that works with a component if one is provided. This ensures the handler runs in the right context, like accessing the component’s data. The function also returns the `boundHandler` so it can be stored and later removed when cleaning up with `removeEventListener()`. This prevents memory leaks, which can happen if event listeners are left attached to elements that are no longer in use.
 
 the `addEventListener()` function is simple. But if you recall, the event listeners defined in a virtual node come packed in an object. The keys are the event names, and the values are the event handler functions, like so:
-```
+```javascript
 {
     type: DOM_TYPES.ELEMENT,
     tag: 'button',
@@ -46,7 +46,7 @@ the `addEventListener()` function is simple. But if you recall, the event listen
 ```
 # The addEventListeners() function
 It makes sense to have another function, if only for convenience, that allows you to add multiple event listeners in the form of an object to an element node. function called `addEventListeners()` `(plural)`: 
-```
+```javascript
 export function addEventListeners(listeners = {}, el, hostComponent = null) {
   const addedListeners = {};
 
@@ -69,7 +69,7 @@ The `removeEventListeners()` function removes event listeners from a DOM element
 
 This function is crucial for cleaning up your webpage. When elements are removed from the DOM (like when a component is destroyed), you need to remove their event listeners to free up memory. Without this, the browser might keep unused listeners around, causing memory leaks that slow down your app. The function uses the stored handlers from `addEventListeners()` to know exactly which listeners to remove with `removeEventListener()`.
 
-```
+```javascript
 export function removeEventListeners(listeners = {}, el) {
   Object.entries(listeners).forEach(([eventName, handler]) => {
     el.removeEventListener(eventName, handler); // Removes each event listener

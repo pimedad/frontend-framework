@@ -2,7 +2,7 @@
 Given a `virtual DOM tree`, you want your `framework` to create the real `DOM` tree from  it and attach it to the browser’s document. We call this process **`mounting the virtual DOM.`**
 
 For example if we define a `virtual DOM`, we define its as
-```
+```javascript
 const vdom = h('form', { class: 'login-form', action: 'login' }, [
     h('input', { type: 'text', name: 'user' }),
     h('input', { type: 'password', name: 'pass' }),
@@ -11,7 +11,7 @@ const vdom = h('form', { class: 'login-form', action: 'login' }, [
 ```
 passed to the `mountDOM()` function as `mountDOM(vdom, document.body)`. This `HTML` tree would be attached to the `<body>` element, and the resulting `HTML`
 markup would be
-```
+```javascript
 <body>
     <form class="login-form" action="login">
         <input type="text" name="user">
@@ -23,7 +23,7 @@ markup would be
 A virtual node of type `text` requires a `Text` node to be created (via the `document.createTextNode()` method).<br>A virtual `node` of type `element` requires an Element node to be created (via the `document.createElement()` method).
 
 # The mountDOM() function
-```
+```javascript
 export function mountDOM(vdom, parentEl, index, hostComponent = null) {
   switch (vdom.type) {
     case DOM_TYPES.TEXT: {
@@ -57,13 +57,13 @@ The function uses a `switch statement` that checks the type of the virtual node.
 
 - `createTextNode()` method creates text node via Document API. This method expects a string as an argument, which is the text that the text node will contain. The virtual
   nodes created by the `hString()` function implemented in `h.js` have the following structure:
-    ````
+    ````javascript
       {
         type: DOM_TYPES.TEXT,
         value: 'I need more coffee'
       }
     ````
-    ```
+    ```javascript
   function createTextNode(vdom, parentEl) {
         const { value } = vdom
     
@@ -78,7 +78,7 @@ The function uses a `switch statement` that checks the type of the virtual node.
 
   This function is needed because most of your webpage is made up of elements like divs, buttons, or inputs. It creates the element, adds its properties (like `class` or `id`), and then processes its children (which could be text, other elements, or components) by calling `mountDOM()` on each one. Finally, it attaches the element to the parent at the right spot.
 
-  ```
+  ```javascript
   function createElementNode(vdom, parentEl, index, hostComponent) {
     const { tag, children } = vdom;
   
@@ -92,7 +92,7 @@ The function uses a `switch statement` that checks the type of the virtual node.
   ```
   
 - `createFragmentNodes()` method creates the nodes for the children of a virtual DOM fragment node and appends them to the parent element.
-  ```
+  ```javascript
   function createFragmentNodes(vdom, parentEl, index, hostComponent) {
   const { children } = vdom;
   vdom.el = parentEl;
@@ -116,12 +116,12 @@ The function uses a `switch statement` that checks the type of the virtual node.
     }
    }
   }
-
+  ```
 - `createElementNode()` function turns an element virtual node (like one created by `h()` for a `div` or `button`) into a real HTML element in the DOM. It’s like building a piece of the webpage, such as a `<div>` or `<button>`, and filling it with its properties and children. 
 
   <br>This function is needed because most of your webpage is made up of elements like `divs`, `buttons`, or `inputs`. It creates the element, adds its properties (like `class` or `id`), and then processes its `children` (which could be `text`, other elements, or components) by calling `mountDOM()` on each one. Finally, it attaches the element to the `parent` at the right spot.
 
-  ```
+  ```javascript
   function createElementNode(vdom, parentEl, index, hostComponent) {
     const { tag, children } = vdom;
   
@@ -138,7 +138,7 @@ The function uses a `switch statement` that checks the type of the virtual node.
 
   This function is important because `components` are a key part of building reusable and organized code. It creates a new instance of the component, passes it the properties and events, sets up any external content (like `slot` content), and connects it to the app’s context. Then, it mounts the component to the DOM and schedules its `onMounted()` method to run after mounting, which is useful for setup tasks like fetching data.
 
-  ```
+  ```javascript
   function createComponentNode(vdom, parentEl, index, hostComponent) {
     const { tag: Component, children } = vdom;
     const { props, events } = extractPropsAndEvents(vdom);
@@ -156,7 +156,7 @@ The function uses a `switch statement` that checks the type of the virtual node.
 
   This function is needed because sometimes you want to `add` an element at a specific place in the parent’s list of children, not just at the end. For example, if you’re adding a new item to a list, you might want it to go in the middle, not always at the bottom. The `index` parameter tells the function where to put the element. If no index is given, it just adds the element to the end.
 
-  ```
+  ```javascript
   function insert(el, parentEl, index) {
     if (index == null) {
       parentEl.append(el); // Adds to the end if no index is provided
@@ -181,7 +181,7 @@ The function uses a `switch statement` that checks the type of the virtual node.
 
   This function is important because elements in the DOM need attributes to look and act correctly, like having a specific style or responding to a user’s click. It splits the virtual node’s properties into attributes and events, applies the attributes with `setAttributes()`, and adds the event listeners with `addEventListeners()`. It also saves the listeners so they can be removed or updated later.
   As you can see, the props property of the virtual node contains the attributes and event listeners. But attributes and event listeners are handled differently `-> ../documentation/evenListenerDocumentation.md`
-  ```
+  ```javascript
   function addProps(el, vdom, hostComponent) {
     const { props: attrs, events } = extractPropsAndEvents(vdom);
   

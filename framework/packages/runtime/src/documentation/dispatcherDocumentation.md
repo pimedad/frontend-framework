@@ -19,17 +19,17 @@ This table explains the difference between **events** and **commands** in a web 
 Reducer functions can be implemented in a few ways. 
 But if we decide to stick to the functional programming principles of using pure functions and making data immutable, instead of updating the state by mutating it, these functions should create a new one passed to them (mutation would be a side effect, so the function wouldn’t be pure); instead, they create a new state.
 Consider an example based on the TODOs application. To create a new version of the state when the user removes a to-do item from the list, the reducer function associated with this 'remove-todo' command would look like this:
-```
+```javascript
 function removeTodo(state, todoIndex) {
 return state.toSpliced(todoIndex, 1)
 }
 ```
 If we had the state: 
-```
+```javascript
 let todos = ['Walk the dog', 'Water the plants', 'Sand the chairs']
 ```
 and wanted to remove the to-do item at index 1, we would compute the new state by using the `removeTodo()` `reducer`, as follows:
-```
+```javascript
 todos = removeTodo(todos, 1)
 // todos = ['Walk the dog', 'Sand the chairs']
 ```
@@ -72,7 +72,7 @@ This method is crucial because it triggers the actual work of updating the state
 
 Here’s the complete `Dispatcher` class implementation:
 
-```
+```javascript
 export class Dispatcher {
   #subs = new Map();
   #afterHandlers = [];

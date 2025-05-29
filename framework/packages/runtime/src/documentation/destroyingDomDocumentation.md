@@ -24,7 +24,7 @@ handle these three cases, you need a switch statement that (depending on the typ
 property of the virtual node) calls a different function.
 
 # The destroyDOM() function 
-```
+```javascript
 export function destroyDOM(vdom) {
   const { type } = vdom;
 
@@ -61,7 +61,7 @@ export function destroyDOM(vdom) {
 
 # Destroying a text node
 Destroying a text node is the simplest case:
-```
+```javascript
 function removeTextNode(vdom) {
   const { el } = vdom;
   el.remove();
@@ -75,7 +75,7 @@ recursively destroy the children of the element by calling the `destroyDOM()` fu
 for each of them. Finally, remove the event listeners from the element and delete the
 listeners property from the virtual node: 
 
-```
+```javascript
 function removeElementNode(vdom) {
   const { el, children, listeners } = vdom;
 
@@ -97,7 +97,7 @@ But keep in mind not to remove the el referenced in the fragment’s virtual nod
 <br>that `el` references the element where the fragment children are mounted, not the fragment itself. If the fragment children were mounted inside the
 `<body>` and we would have called the `remove()` method on the element, we’d remove the `whole` document from the DOM.
 
-```
+```javascript
 function removeFragmentNodes(vdom) {
   const { children } = vdom;
   children.forEach(destroyDOM);

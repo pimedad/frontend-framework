@@ -4,7 +4,7 @@ The name `h()` is short for `hyperscript`, a script that creates `hypertext`. Th
 
 The `h()` function returns a **virtual node object** with the passed-in `tag` `name`, `props`, and `children`, plus a `type` property set to `DOM_TYPES.ELEMENT`. You want to give default values to the props and children parameters so that you can call the function with only the tag name, as in `h('div')`, which should be equivalent to calling `h('div', {}, [])`.
 
-````
+````javascript
 export function h(tag, props = {}, children = []) {
   const type = typeof tag === 'string' ? DOM_TYPES.ELEMENT : DOM_TYPES.COMPONENT;
   return {
@@ -18,18 +18,18 @@ export function h(tag, props = {}, children = []) {
 # The mapTextNodes() function
 The `mapTextNodes()` function transforms strings into text **_virtual nodes_**. Why do that? Well, instead of writing
 
-```
+```javascript
 h('div', {}, [hString('Hello '), hString('world!')])
 ```
 
 we can just write 
-```
+```javascript
 h('div', {}, ['Hello ', 'world!'])
 ```
 
 Since we do use text children often, this function will make life easier
 
-```
+```javascript
 function mapTextNodes(children) {
     return children.map((child) =>
         typeof child === 'string' ? hString(child) : child
@@ -38,7 +38,7 @@ function mapTextNodes(children) {
 ```
 # The hString() function
 the `hString()` function that is used in `mapTextNodes()` is used to create text virtual nodes from strings
-```
+```javascript
 export function hString(str) {
     return { type: DOM_TYPES.TEXT, value: str }
 }
@@ -47,7 +47,7 @@ export function hString(str) {
 Since `fragment` is also a type of **_virtual node_** used to group multiple nodes that need to be attached to the `DOM` together but don’t have a `parent` node in the `DOM`. Just think of a `fragment node` as being a `container` _**for an array of virtual nodes.**_
 This where the `hFragment()` function comes to play to create fragment virtual nodes. A `fragment` is an array of child nodes, so its implementation is simple: 
 
-```
+```javascript
 export function hFragment(vNodes) {
     return {
         type: DOM_TYPES.FRAGMENT,
@@ -63,7 +63,7 @@ Once again: It Extracts the children of a virtual node. If one of the children i
 
 In other words, the fragments are replaced by their children.
 
-```
+```javascript
 export function extractChildren(vdom) {
   if (vdom.children == null) { // If the node has no children, returns an empty array
     return [];
@@ -89,7 +89,7 @@ This function is important because it makes your code faster. Instead of always 
 
 After you check `didCreateSlot()`, you should call `resetDidCreateSlot()` to set the checkpoint back to `false`. This keeps everything ready for the next time the component renders.
 
-```
+```javascript
 export function didCreateSlot() {
   return hSlotCalled
 }
@@ -100,7 +100,7 @@ The `resetDidCreateSlot()` function is a simple helper that clears the checkpoin
 
 This function is needed to keep the slot-checking process clean and accurate. Without resetting the flag, the code might think a slot is still there when it’s not, causing confusion.
 
-```
+```javascript
 export function resetDidCreateSlot() {
   hSlotCalled = false
 }
@@ -114,7 +114,7 @@ This function is important because it lets components be flexible. For example, 
 
 A slot node isn’t meant to be added directly to the DOM, so trying to do that will cause an error. That’s why components handle slots themselves. After using `hSlot()`, you should always call `resetDidCreateSlot()` to clear the flag.
 
-```
+```javascript
 export function hSlot(children = []) {
   hSlotCalled = true
   return { type: DOM_TYPES.SLOT, children }
@@ -127,7 +127,7 @@ The `isComponent()` function checks if a virtual node represents a component. A 
 
 This is useful because components and elements are handled differently when rendering. Components have their own logic and might create their own virtual DOM trees, while elements are simpler and go straight to the DOM. By checking this, your code knows how to process the node correctly.
 
-```
+```javascript
 export function isComponent({ tag }) {
   return typeof tag === 'function'
 }

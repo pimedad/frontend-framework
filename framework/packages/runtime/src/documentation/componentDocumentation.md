@@ -11,7 +11,7 @@ This documentation details each method’s logic and provides examples using `Da
 
 # Anatomy of a Stateful Component
 
-![Component Anatomy](componentAnatomy.png)
+![Component Anatomy](img/componentAnatomy.png)
 
 A stateful component maintains its own state, enabling unique data per instance. When state changes, the view re-renders. For example, `DailyCompleteTodoCounter` starts with `state = { dailyCount: 0 }` and updates to `{ dailyCount: 1 }` when a task is completed today, refreshing the display.
 

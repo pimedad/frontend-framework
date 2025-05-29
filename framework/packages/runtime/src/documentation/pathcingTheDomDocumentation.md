@@ -19,7 +19,7 @@ Here’s how it works in simple steps:
     - **Component nodes**: Update component props and children.
 4. **Patch children**: Use `arraysDiffSequence()` to find which children were added, removed, or moved, and update the DOM accordingly.
 
-```
+```javascript
 export function patchDOM(oldVdom, newVdom, parentEl, hostComponent = null) {
   if (!areNodesEqual(oldVdom, newVdom)) {
     const index = findIndexInParent(parentEl, oldVdom.el);
@@ -58,7 +58,7 @@ The `patchComponent()` function updates a component node, which represents a reu
 
 For example, if a component’s props change (e.g., a button’s label updates from “Submit” to “Save”), `patchComponent()` calls `updateProps()` to apply the change. It also updates the component’s children (like text or nested elements) and ensures the DOM reference (`el`) points to the component’s first DOM element.
 
-```
+```javascript
 function patchComponent(oldVdom, newVdom) {
   const { component } = oldVdom;
   const { children } = newVdom;
@@ -81,7 +81,7 @@ For example, if an old virtual DOM has `<form><input><button></form>` and the ne
 - **Move**: Shift a node to a new index and patch it (e.g., move `<p>` to index 0).
 - **Noop**: Patch a node that stayed in place (e.g., update `<input>`’s attributes).
 
-```
+```javascript
 function patchChildren(oldVdom, newVdom, hostComponent) {
   const oldChildren = extractChildren(oldVdom); // Get old children
   const newChildren = extractChildren(newVdom); // Get new children
@@ -137,7 +137,7 @@ For example, if a `<div id="abc" class="foo">` changes to `<div id="def" class="
 - `patchStyles()` for styles like `color: blue`.
 - `patchEvents()` for event listeners like `onclick`.
 
-```
+```javascript
 function patchElement(oldVdom, newVdom, hostComponent) {
   const el = oldVdom.el;
   const {
@@ -167,7 +167,7 @@ The `patchAttrs()` function updates an element’s attributes, like `id`, `name`
 
 For example, if a `<div id="abc">` changes to `<div id="def" data-test="true">`, `patchAttrs()` removes `id="abc"`, sets `id="def"`, and adds `data-test="true"`. It uses `setAttribute()` for adding or updating and `removeAttribute()` for removing.
 
-```
+```javascript
 function patchAttrs(el, oldAttrs, newAttrs) {
   const { added, removed, updated } = objectsDiff(oldAttrs, newAttrs);
 
@@ -187,7 +187,7 @@ The `patchClasses()` function updates an element’s CSS classes, which can be a
 
 For example, if a `<p class="foo">` changes to `<p class="bar">`, `patchClasses()` removes `foo` and adds `bar` using `classList.remove()` and `classList.add()`. It filters out blank or empty strings to avoid errors.
 
-```
+```javascript
 function patchClasses(el, oldClass, newClass) {
   const oldClasses = toClassList(oldClass); // Convert to array
   const newClasses = toClassList(newClass);
@@ -210,7 +210,7 @@ The `patchStyles()` function updates an element’s CSS styles, like `color` or 
 
 For example, if a `<div style="color: blue">` changes to `<div style="color: red">`, `patchStyles()` removes `color: blue` and sets `color: red` using `setStyle()` and `removeStyle()`. It handles both added and updated styles in one step.
 
-```
+```javascript
 function patchStyles(el, oldStyle = {}, newStyle = {}) {
   const { added, removed, updated } = objectsDiff(oldStyle, newStyle);
 
@@ -230,7 +230,7 @@ The `patchEvents()` function updates an element’s event listeners, like `oncli
 
 For example, if a `<button onclick="handleClick">` changes its handler, `patchEvents()` removes the old listener and adds the new one. It uses `addEventListener()` (a custom function that wraps handlers) to add listeners and `removeEventListener()` to remove them, tracking listeners in an object for later removal.
 
-```
+```javascript
 function patchEvents(el, oldListeners = {}, oldEvents = {}, newEvents = {}, hostComponent) {
   const { removed, added, updated } = objectsDiff(oldEvents, newEvents);
 
@@ -255,7 +255,7 @@ The `patchText()` function updates a text node’s content if it has changed, li
 
 For example, if a text node’s `nodeValue` changes from “Hello” to “Hi”, `patchText()` sets the DOM element’s `nodeValue` to the new text. If the text is the same, it does nothing to avoid unnecessary updates.
 
-```
+```javascript
 function patchText(oldVdom, newVdom) {
   const el = oldVdom.el;
   const { value: oldText } = oldVdom;
@@ -273,7 +273,7 @@ The `findIndexInParent()` function finds the index of a DOM element within its p
 
 For example, if a `<p>` is the second child of a `<form>`, this function returns `1`. If the element isn’t found (e.g., for fragments), it returns `null`, meaning the new node will be appended.
 
-```
+```javascript
 function findIndexInParent(parentEl, el) {
   const index = Array.from(parentEl.childNodes).indexOf(el);
   if (index < 0) {
@@ -290,7 +290,7 @@ The `toClassList()` function converts a class string (e.g., `"foo bar"`) or arra
 
 For example, `"foo bar "` becomes `["foo", "bar"]`, and `["foo", "", "bar"]` becomes `["foo", "bar"]`. This helps `patchClasses()` work with consistent arrays.
 
-```
+```javascript
 function toClassList(classes = '') {
   return Array.isArray(classes)
     ? classes.filter(isNotBlankOrEmptyString) // Filter array
