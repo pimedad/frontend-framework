@@ -12,7 +12,8 @@ export default defineComponent({
     const currentFilter =
       this.appContext.router.matchedRoute?.name?.toLowerCase() || "all";
     const onClearCompleted = this.appContext.todoHandlers.clearCompleted;
-    const { activeCount, completedCount } = stats;
+    const { active: activeCount, completed: completedCount } = stats;
+
     const itemWord = activeCount === 1 ? "task" : "tasks";
 
     return h("footer", { class: "footer" }, [
