@@ -127,6 +127,7 @@ The framework’s documentation is split into core features and utility helpers,
 - **[Arrays (`diffingArraysDocumentation.md`)](./framework/packages/runtime/src/utils/documentation/diffingArraysDocumentation.md)**: Utilities for array operations.
 - **[Props (`propsDocumentation.md`)](./framework/packages/runtime/src/utils/documentation/propsDocumentation.md)**: Helpers for managing component props.
 - **[Strings (`stringsDocumentation.md`)](./framework/packages/runtime/src/utils/documentation/stringsDocumentation.md)**: Utilities for string operations.
+- **[Traverse DOM & Slots (`traverseDomAndSotsDocumentation.md`)](./framework/packages/runtime/src/utils/documentation/traverseDomAndSotsDocumentation.md)**: Utilities for managing the Virtual DOM and component architecture through slots.
 
 > **Tip**: Each [Documentation](#documentation) file includes code examples and best practices to help you implement features effectively.
 
