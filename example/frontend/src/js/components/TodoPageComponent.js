@@ -59,7 +59,13 @@ export default defineComponent({
           [
             h(
               "span",
-              { style: "font-size: 0.8em; margin-left: 10px; color: grey;" },
+              {
+                style: {
+                  "font-size": "0.8em",
+                  "margin-left": "10px",
+                  color: "grey",
+                },
+              },
               [`ID: ${todo.id}`]
             ),
           ]
