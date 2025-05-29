@@ -31,7 +31,7 @@ When updating a webpage, the framework compares virtual DOM nodes to decide what
 
 Components have internal state, like a `count` in a `Counter` component, that isn’t visible in the virtual DOM tree. This makes it hard for the reconciliation algorithm to tell components apart when updating a list. For example, if you have a list of `Counter` components:
 
-```
+```javascript
 h('div', {}, [
   h(Counter, { initialCount: 0 }),
   h(Counter, { initialCount: 1 }),
@@ -43,7 +43,7 @@ and remove the middle one, the algorithm can’t tell which component was remove
 
 To solve this, developers can add a `key` attribute to each component to give it a unique identifier, like this:
 
-```
+```javascript
 h('div', {}, [
   h(Counter, { key: 'counter-0', initialCount: 0 }),
   h(Counter, { key: 'counter-1', initialCount: 1 }),
@@ -53,7 +53,7 @@ h('div', {}, [
 
 If the middle component (`key: 'counter-1'`) is removed, the new virtual DOM tree becomes:
 
-```
+```javascript
 h('div', {}, [
   h(Counter, { key: 'counter-0', initialCount: 0 }),
   h(Counter, { key: 'counter-2', initialCount: 2 }),
@@ -70,7 +70,7 @@ The `areNodesEqual()` function checks if two virtual nodes are equal based on th
 
 This function is crucial for efficient DOM updates. It first checks if the nodes have the same `type`. If they do, it applies specific rules: for element nodes, it compares their tags and `key` attributes; for component nodes, it compares their prototypes (e.g., the same `Counter` class) and `key` attributes; for text and fragment nodes, it considers them equal. This ensures the framework reuses nodes when possible, making updates faster and more accurate.
 
-```
+```javascript
 import { DOM_TYPES } from "./h";
 
 export function areNodesEqual(nodeOne, nodeTwo) {

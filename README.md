@@ -1,31 +1,32 @@
 # Front-end Framework
 ![Version](https://img.shields.io/badge/version-1.0.0-green.svg)
 ![Build Status](https://img.shields.io/badge/build-passing-brightgreen.svg)
+![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)
 ![frontend framework](./framework/packages/runtime/src/documentation/img/front-end-framework.jpeg)
 
 **DotJS Framework** is a component-based frontend framework for building dynamic single-page applications (SPAs) using vanilla JavaScript. It provides a minimal API, virtual DOM rendering, state management, client-side routing, and task scheduling, all built on standard browser APIs without external dependencies.
 
-This README serves as the entry point to the framework, guiding you through its architecture, features, and setup. Use the table of contents to navigate quickly or explore the sections below for a comprehensive overview.
+This README serves as the entry point to the framework, guiding you through its architecture, features, and setup. Use the table of contents to navigate quickly or explore the sections below for an overview.
 
 ---
 
 ## Table of Contents
 
-- [🏛️ Architecture](#architecture)
-- [🎯 Design Principles](#design-principles)
-- [🛠️ Getting Started](#getting-started)
+- [Architecture](#architecture)
+- [Design Principles](#design-principles)
+- [Getting Started](#getting-started)
     - [Installation](#installation)
     - [Quick Start](#quick-start)
-- [📚 Documentation](#documentation)
+- [Documentation](#documentation)
     - [Core Features](#core-features)
     - [Utility Helpers](#utility-helpers)
-- [📝 Examples](#examples)
+- [Examples](#examples)
     - [Frontend Example](#frontend-example)
     - [Backend Example](#backend-example)
-- [✅ Best Practices](#best-practices)
+- [Best Practices](#best-practices)
 
 
-## 🏛️ Architecture
+## Architecture
 
 DotJS Framework is modular, with each module handling a specific responsibility. Below is an overview of the core modules:
 
@@ -41,7 +42,7 @@ DotJS Framework is modular, with each module handling a specific responsibility.
 
 ---
 
-## 🎯 Design Principles
+## Design Principles
 
 DotJS is guided by these core ideas:
 
@@ -51,7 +52,7 @@ DotJS is guided by these core ideas:
 4.  **Inversion of Control:** As a framework, DotJS calls your code (like component functions) to construct the application.
 5.  **Progressive Enhancement:** Start with the basics and build up complexity as needed.
 
-## 🛠️ Getting Started
+## Getting Started
 
 ### Installation
 TODO: Complete with an actual Installation path/instructions. Currently mock 
@@ -100,43 +101,43 @@ This code mounts a component that renders an `<h1>` element to a DOM container.
 
 ---
 
-## 📚 Documentation
+## Documentation
 
 The framework’s documentation is split into core features and utility helpers, each with detailed guides and examples. Use the links below to explore specific modules.
 
 ### Core Features
 
-- **➡️ [Framework Overview (`appDocumentation.md`)]()**: Learn about the framework’s architecture, design principles, and API.
-- **➡️ [Public API: `index.js` (`publicAPIDocumentation.md`)]("./framework/packages/runtime/src/documentation/publicAPIDocumentation.md")**: Details the entry point, exporting `createApp`, `defineComponent`, and more.
-- **➡️ [Virtual DOM: `h.js` (`hFunctionDocumentation.md`)]("./framework/packages/runtime/src/documentation/hFunctionDocumentation.md")**: Explains `h`, `hString`, `hFragment`, and `hSlot` for creating virtual DOM nodes.
-- **➡️ [Mounting Virtual DOM (`mountingVirtualDomDocumentation.md`)]("./framework/packages/runtime/src/documentation/mountingVirtualNodesDocumentation.md")**: Covers how the framework mounts virtual nodes to the DOM.
-- **➡️ [Destroying Virtual DOM (`destroyingDomDocumentation.md`)]("./framework/packages/runtime/src/documentation/destroyingDomDocumentation.md")**: Explains cleanup of virtual DOM nodes.
-- **➡️ [Event Listeners (`eventListenerDocumentation.md`)]("./framework/packages/runtime/src/documentation/eventListenerDocumentation.md")**: Describes how to handle events in components.
-- **➡️ [Attributes (`attributesDocumentation.md`)]("./framework/packages/runtime/src/documentation/attributesDocumentation.md")**: Details attribute management for DOM elements.
-- **➡️ [Dispatcher (`dispatcherDocumentation.md`)]("./framework/packages/runtime/src/documentation/dispatcherDocumentation.md")**: Explains the event dispatcher for component communication.
-- **➡️ [Nodes Equality (`nodeEqualityDocumentation.md`)]("./framework/packages/runtime/src/documentation/nodeEqualityDocumentation.md")**: Covers how the framework compares virtual DOM nodes.
-- **➡️ [Patching the DOM (`pathcingTheDomDocumentation.md`)]("./framework/packages/runtime/src/documentation/pathcingTheDomDocumentation.md")**: Describes efficient DOM updates.
-- **➡️ [Stateful Components (`componentDocumentation.md`)]("./framework/packages/runtime/src/documentation/componentDocumentation.md")**: Details component creation with state and lifecycle hooks.
-- **➡️ [Scheduler (`schedulerDocumentation.md`)]("./framework/packages/runtime/src/documentation/schedulerDocumentation.md")**: Explains task scheduling for lifecycle hooks.
-- **➡️ [Routing (`routingDocumentation.md`)]("./framework/packages/runtime/src/documentation/routingDocumentation.md")**: Covers `HashRouter`, `RouterLink`, and `RouterOutlet` for client-side routing.
+- **[Framework Overview (`appDocumentation.md`)]()**: Learn about the framework’s architecture, design principles, and API.
+- **[Public API: `index.js` (`publicAPIDocumentation.md`)](./framework/packages/runtime/src/documentation/publicAPIDocumentation.md)**: Details the entry point, exporting `createApp`, `defineComponent`, and more.
+- **[Virtual DOM: `h.js` (`hFunctionDocumentation.md`)](./framework/packages/runtime/src/documentation/hFunctionDocumentation.md)**: Explains `h`, `hString`, `hFragment`, and `hSlot` for creating virtual DOM nodes.
+- **[Mounting Virtual DOM (`mountingVirtualDomDocumentation.md`)](./framework/packages/runtime/src/documentation/mountingVirtualNodesDocumentation.md)**: Covers how the framework mounts virtual nodes to the DOM.
+- **[Destroying Virtual DOM (`destroyingDomDocumentation.md`)](./framework/packages/runtime/src/documentation/destroyingDomDocumentation.md)**: Explains cleanup of virtual DOM nodes.
+- **[Event Listeners (`eventListenerDocumentation.md`)](./framework/packages/runtime/src/documentation/eventListenerDocumentation.md)**: Describes how to handle events in components.
+- **[Attributes (`attributesDocumentation.md`)](./framework/packages/runtime/src/documentation/attributesDocumentation.md)**: Details attribute management for DOM elements.
+- **[Dispatcher (`dispatcherDocumentation.md`)](./framework/packages/runtime/src/documentation/dispatcherDocumentation.md)**: Explains the event dispatcher for component communication.
+- **[Nodes Equality (`nodeEqualityDocumentation.md`)](./framework/packages/runtime/src/documentation/nodeEqualityDocumentation.md)**: Covers how the framework compares virtual DOM nodes.
+- **[Patching the DOM (`pathcingTheDomDocumentation.md`)](./framework/packages/runtime/src/documentation/pathcingTheDomDocumentation.md)**: Describes efficient DOM updates.
+- **[Stateful Components (`componentDocumentation.md`)](./framework/packages/runtime/src/documentation/componentDocumentation.md)**: Details component creation with state and lifecycle hooks.
+- **[Scheduler (`schedulerDocumentation.md`)](./framework/packages/runtime/src/documentation/schedulerDocumentation.md)**: Explains task scheduling for lifecycle hooks.
+- **[Routing (`routingDocumentation.md`)](./framework/packages/runtime/src/documentation/routingDocumentation.md)**: Covers `HashRouter`, `RouterLink`, and `RouterOutlet` for client-side routing.
 
 ### Utility Helpers
 
-- **➡️ [Objects (`diffingObjectsDocumentation.md`)]("./framework/packages/runtime/src/utils/documentation/diffingObjectsDocumentation.md")**: Utilities for object manipulation.
-- **➡️ [Arrays (`diffingArraysDocumentation.md`)]("./framework/packages/runtime/src/utils/documentation/diffingArraysDocumentation.md")**: Utilities for array operations.
-- **➡️ [Props (`propsDocumentation.md`)]("./framework/packages/runtime/src/utils/documentation/propsDocumentation.md")**: Helpers for managing component props.
-- **➡️ [Strings (`stringsDocumentation.md`)]("./framework/packages/runtime/src/utils/documentation/stringsDocumentation.md")**: Utilities for string operations.
+- **[Objects (`diffingObjectsDocumentation.md`)](./framework/packages/runtime/src/utils/documentation/diffingObjectsDocumentation.md)**: Utilities for object manipulation.
+- **[Arrays (`diffingArraysDocumentation.md`)](./framework/packages/runtime/src/utils/documentation/diffingArraysDocumentation.md)**: Utilities for array operations.
+- **[Props (`propsDocumentation.md`)](./framework/packages/runtime/src/utils/documentation/propsDocumentation.md)**: Helpers for managing component props.
+- **[Strings (`stringsDocumentation.md`)](./framework/packages/runtime/src/utils/documentation/stringsDocumentation.md)**: Utilities for string operations.
 
 > **Tip**: Each documentation file includes code examples and best practices to help you implement features effectively.
 
 ---
-## 📝 Examples
+## Examples
 TODO: Complete with some actual examples. currently mock
 Explore practical examples to see DotJS in action. These examples demonstrate how to use the framework’s features in real-world scenarios.
 
 ### Frontend Example
 
-**➡️ [Todo App (`todo-app-example.md`)]()**: A complete SPA with state management, routing, and components.
+**[Todo App (`todo-app-example.md`)]()**: A complete SPA with state management, routing, and components.
 
 ```javascript
 import { createApp, defineComponent, h, RouterLink, RouterOutlet, HashRouter } from './framework';
@@ -163,15 +164,15 @@ app.mount(document.getElementById('app'));
 
 ### Backend Example
 
-**➡️ [API Integration (`api-example.md`)]()**: Connect DotJS to a backend API for data fetching.
+**[API Integration (`api-example.md`)]()**: Connect DotJS to a backend API for data fetching.
 
 > **Note**: Example documentation files are placeholders. Ensure they are created in the repository with detailed instructions.
 
 ---
 
-## ✅ Best Practices
+## Best Practices
 
-To build robust applications with DotJS, follow these guidelines:
+To build applications with DotJS, follow these guidelines:
 
 1. **Modular Components**: Create small, reusable components with clear responsibilities.
 2. **State Management**: Use `updateState` for state changes to trigger efficient re-renders.
@@ -192,7 +193,7 @@ TODO: Complete with an actual Installation path/instructions. Currently mock
 
 For detailed setup instructions, including prerequisites and troubleshooting:
 
-- **➡️ [Installation Guide (`installation.md`)]()**: Step-by-step instructions for setting up DotJS.
+- **[Installation Guide (`installation.md`)]()**: Step-by-step instructions for setting up DotJS.
 - Ensure documentation files are accessible and up-to-date in the repository.
 
 ---

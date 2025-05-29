@@ -3,9 +3,6 @@
 This document provides guidance for developers using the routing features of the `Blind Dating App Team Ⓒ frontend framework`, covering `router.js`, `router-components.js`, and `route-matchers.js`. These modules enable client-side routing, allowing applications to navigate between views without full page reloads. The documentation includes an `overview` of the routing architecture, detailed `explanations` of each function and component with practical `examples`.
 
 ---
-
-![Routing Architecture](img/router.png)
-
 ## Routing Architecture and Design Principles
 
 The framework’s routing system is designed to provide solution for client-side navigation in `single-page applications (SPAs)`. It uses a **hash-based routing** approach, supporting the browser’s URL hash (e.g., `#/path`) to manage routes, making it simple to implement and compatible with static hosting.
