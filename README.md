@@ -2,6 +2,8 @@
 ![Version](https://img.shields.io/badge/version-1.0.0-green.svg)
 ![Build Status](https://img.shields.io/badge/build-passing-brightgreen.svg)
 ![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)
+![DotJs](https://img.shields.io/badge/dot-JS-blueviolet)
+
 ![frontend framework](./framework/packages/runtime/src/documentation/img/front-end-framework.jpeg)
 
 **DotJS Framework** is a component-based frontend framework for building dynamic single-page applications (SPAs) using vanilla JavaScript. It provides a minimal API, virtual DOM rendering, state management, client-side routing, and task scheduling, all built on standard browser APIs without external dependencies.
@@ -54,30 +56,21 @@ DotJS is guided by these core ideas:
 
 ## Getting Started
 
-### Installation
-TODO: Complete with an actual Installation path/instructions. Currently mock 
-1. **Clone the Repository**:
-   ```bash
-   git clone https://gitea.kood.tech/karlrometsomelar/frontend-framework
-   cd frontend-framework
-   ```
+## [Installation](./framework/packages/runtime/src/documentation/Installation.md)
+### Prerequisites
 
-2. **Install Dependencies**:
-   ```bash
-   npm install
-   ```
+Before installing the DotJS framework, ensure you have the following tools installed:
 
-3. **Build the Framework**:
-   ```bash
-   npm run build
-   ```
+- **Node.js**: Version `18.x` or higher (includes npm). Download from [nodejs.org](https://nodejs.org/).
+- **Java Development Kit (JDK)**: Version `21` or higher (for the backend of the example Todo app). Download from [oracle.com](https://www.oracle.com/java/technologies/downloads/) or use an OpenJDK distribution.
+- **PostgreSQL**: Version `13` or higher (for the example Todo app's database). Download from [postgresql.org](https://www.postgresql.org/download/).
+- **Git**: To clone the `repository`. Download from [git-scm.com](https://git-scm.com/downloads).
+- **A code editor**: Such as `Visual Studio Code` or `IntelliJ IDEA` for editing project files.
 
-4. **Serve the Example App**:
-   ```bash
-   npm start
-   ```
+> Ensure these tools are properly installed and accessible from your terminal or command prompt.
 
-> **Note**: Ensure you have Node.js and npm installed. See the [Installation Instructions](#installation-instructions) for detailed setup steps.
+> See the [Installation Instructions](./framework/packages/runtime/src/documentation/Installation.md) for detailed setup steps.
+
 
 ### Quick Start
 TODO: Complete with an actual Quick Start instructions. Currently mock
@@ -186,16 +179,6 @@ To build applications with DotJS, follow these guidelines:
 9. **Testing**: Test components in isolation and verify routing behavior with `navigateTo`.
 
 > **Details**: Each [Documentation](#documentation) file includes module-specific best practices.
-
----
-
-## Installation Instructions
-TODO: Complete with an actual Installation path/instructions. Currently mock
-
-For detailed setup instructions, including prerequisites and troubleshooting:
-
-- **[Installation Guide (`installation.md`)]()**: Step-by-step instructions for setting up DotJS.
-- Ensure documentation files are accessible and up-to-date in the repository.
 
 ---
 
