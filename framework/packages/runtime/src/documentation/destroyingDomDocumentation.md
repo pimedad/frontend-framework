@@ -1,4 +1,4 @@
-# Destroying the DOM
+# The destroy-dom.js Documentation
 
 Destroying the
 DOM is simpler than mounting it. Well, destroying anything is always simpler than

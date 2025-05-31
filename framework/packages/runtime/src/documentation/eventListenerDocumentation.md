@@ -1,4 +1,4 @@
-# The EventListeners 
+# The events.js Documentation 
 Setting the attributes and adding event listeners is the part where the code differs
 from text nodes. With text nodes, you want to attach event listeners and set attributes
 to the parent element node, not to the text node itself.
@@ -67,7 +67,7 @@ This function is needed because elements often need to respond to more than one 
 
 The `removeEventListeners()` function removes event listeners from a DOM element. It’s like telling an element to stop listening for certain user actions, such as clicks or key presses, when you’re done with it.
 
-This function is crucial for cleaning up your webpage. When elements are removed from the DOM (like when a component is destroyed), you need to remove their event listeners to free up memory. Without this, the browser might keep unused listeners around, causing memory leaks that slow down your app. The function uses the stored handlers from `addEventListeners()` to know exactly which listeners to remove with `removeEventListener()`.
+This function is meant for cleaning up your webpage. When elements are removed from the DOM (like when a component is destroyed), you need to remove their event listeners to free up memory. Without this, the browser might keep unused listeners around, causing memory leaks that slow down your app. The function uses the stored handlers from `addEventListeners()` to know exactly which listeners to remove with `removeEventListener()`.
 
 ```javascript
 export function removeEventListeners(listeners = {}, el) {

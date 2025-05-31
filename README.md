@@ -22,9 +22,6 @@ This README serves as the entry point to the framework, guiding you through its 
 - [Documentation](#documentation)
     - [Core Features](#core-features)
     - [Utility Helpers](#utility-helpers)
-- [Examples](#examples)
-    - [Frontend Example](#frontend-example)
-    - [Backend Example](#backend-example)
 - [Best Practices](#best-practices)
 
 
@@ -72,25 +69,9 @@ Before installing the DotJS framework, ensure you have the following tools insta
 > See the [Installation Instructions](./framework/packages/runtime/src/documentation/Installation.md) for detailed setup steps.
 
 
-### Quick Start
-TODO: Complete with an actual Quick Start instructions. Currently mock
+## [Quick Start](./framework/packages/runtime/src/documentation/QuickStart.md)
+> **Note**: This framework is for **educational purposes only** and not intended for production use. Ensure you have followed the [Installation Instructions](installation.md) before proceeding.
 
-Create a simple application with DotJS:
-
-```javascript
-import { createApp, defineComponent, h } from './framework';
-
-const App = defineComponent({
-  render() {
-    return h('h1', {}, ['Welcome to DotJS!']);
-  },
-});
-
-const app = createApp(App);
-app.mount(document.getElementById('app'));
-```
-
-This code mounts a component that renders an `<h1>` element to a DOM container. 
 
 ---
 
@@ -100,7 +81,7 @@ The framework’s documentation is split into core features and utility helpers,
 
 ### Core Features
 
-- **[Framework Overview (`appDocumentation.md`)]()**: Learn about the framework’s architecture, design principles, and API.
+- **[Framework Overview (`appDocumentation.md`)](./framework/packages/runtime/src/documentation/appDocumentation.md)**: Learn about the framework’s architecture, design principles, and API.
 - **[Public API: `index.js` (`publicAPIDocumentation.md`)](./framework/packages/runtime/src/documentation/publicAPIDocumentation.md)**: Details the entry point, exporting `createApp`, `defineComponent`, and more.
 - **[Virtual DOM: `h.js` (`hFunctionDocumentation.md`)](./framework/packages/runtime/src/documentation/hFunctionDocumentation.md)**: Explains `h`, `hString`, `hFragment`, and `hSlot` for creating virtual DOM nodes.
 - **[Mounting Virtual DOM (`mountingVirtualDomDocumentation.md`)](./framework/packages/runtime/src/documentation/mountingVirtualNodesDocumentation.md)**: Covers how the framework mounts virtual nodes to the DOM.
@@ -118,52 +99,13 @@ The framework’s documentation is split into core features and utility helpers,
 
 - **[Objects (`diffingObjectsDocumentation.md`)](./framework/packages/runtime/src/utils/documentation/diffingObjectsDocumentation.md)**: Utilities for object manipulation.
 - **[Arrays (`diffingArraysDocumentation.md`)](./framework/packages/runtime/src/utils/documentation/diffingArraysDocumentation.md)**: Utilities for array operations.
-- **[Props (`propsDocumentation.md`)](./framework/packages/runtime/src/utils/documentation/propsDocumentation.md)**: Helpers for managing component props.
+- **[Props (`propsDocumentation.md`)](./framework/packages/runtime/src/utils/documentation/propsDocumentation.md)**: Utilities for managing component props.
 - **[Strings (`stringsDocumentation.md`)](./framework/packages/runtime/src/utils/documentation/stringsDocumentation.md)**: Utilities for string operations.
 - **[Traverse DOM & Slots (`traverseDomAndSotsDocumentation.md`)](./framework/packages/runtime/src/utils/documentation/traverseDomAndSotsDocumentation.md)**: Utilities for managing the Virtual DOM and component architecture through slots.
 
 > **Tip**: Each [Documentation](#documentation) file includes code examples and best practices to help you implement features effectively.
 
 ---
-## Examples
-TODO: Complete with some actual examples. currently mock
-Explore practical examples to see DotJS in action. These examples demonstrate how to use the framework’s features in real-world scenarios.
-
-### Frontend Example
-
-**[Todo App (`todo-app-example.md`)]()**: A complete SPA with state management, routing, and components.
-
-```javascript
-import { createApp, defineComponent, h, RouterLink, RouterOutlet, HashRouter } from './framework';
-
-const Home = defineComponent({
-  render() {
-    return h('h1', {}, ['Home Page']);
-  },
-});
-
-const App = defineComponent({
-  render() {
-    return h('div', {}, [
-      h(RouterLink, { to: '/' }, ['Home']),
-      h(RouterOutlet),
-    ]);
-  },
-});
-
-const router = new HashRouter([{ path: '/', component: Home }]);
-const app = createApp(App, {}, { router });
-app.mount(document.getElementById('app'));
-```
-
-### Backend Example
-
-**[API Integration (`api-example.md`)]()**: Connect DotJS to a backend API for data fetching.
-
-> **Note**: Example documentation files are placeholders. Ensure they are created in the repository with detailed instructions.
-
----
-
 ## Best Practices
 
 To build applications with DotJS, follow these guidelines:
@@ -182,4 +124,4 @@ To build applications with DotJS, follow these guidelines:
 
 ---
 
-*Built by the Blind Dating App Team. Start building your next web app today!*
+*Built by the Blind Dating App Team Ⓒ. Start building your next web app today!*

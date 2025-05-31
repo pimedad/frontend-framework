@@ -1,6 +1,6 @@
-# Routing Documentation
+# The Routing Documentation
 
-This document provides guidance for developers using the routing features of the `Blind Dating App Team Ⓒ frontend framework`, covering `router.js`, `router-components.js`, and `route-matchers.js`. These modules enable client-side routing, allowing applications to navigate between views without full page reloads. The documentation includes an `overview` of the routing architecture, detailed `explanations` of each function and component with practical `examples`.
+This document provides guidance for developers using the routing features of the `frontend framework`, covering `router.js`, `router-components.js`, and `route-matchers.js`. These modules enable client-side routing, allowing applications to navigate between views without full page reloads. The documentation includes an `overview` of the routing architecture, detailed `explanations` of each function and component with practical `examples`.
 
 ---
 ## Routing Architecture and Design Principles
@@ -49,7 +49,7 @@ The `router.js` file defines the `HashRouter` class for client-side routing and 
 **Code**:
 ```javascript
 constructor(routes = []) {
-  this.#matchers = routes.map(makeRouteMatcher);
+   this.#matchers = routes.map(makeRouteMatcher); // Converts each route into a matcher object for path checking
 }
 ```
 
@@ -57,9 +57,11 @@ constructor(routes = []) {
 
 **Example**:
 ```javascript
+import { HashRouter } from './router.js';
+
 const router = new HashRouter([
-  { path: '/', component: Home },
-  { path: '/about', component: About },
+   { path: '/', component: Home }, // Defines a route for the home page
+   { path: '/about', component: About }, // Defines a route for the about page
 ]);
 ```
 
@@ -73,9 +75,9 @@ const router = new HashRouter([
 **Code**:
 ```javascript
 subscribe(handler) {
-  const unsubscribe = this.#dispatcher.subscribe(ROUTER_EVENT, handler);
-  this.#subscriptions.set(handler, unsubscribe);
-  this.#subscriberFns.add(handler);
+   const unsubscribe = this.#dispatcher.subscribe(ROUTER_EVENT, handler); // Subscribes handler to route change events
+   this.#subscriptions.set(handler, unsubscribe); // Stores unsubscribe function for later cleanup
+   this.#subscriberFns.add(handler); // Tracks handler for iteration during cleanup
 }
 ```
 
@@ -96,12 +98,12 @@ router.subscribe(({ to }) => console.log(`Navigated to ${to.path}`));
 **Code**:
 ```javascript
 unsubscribe(handler) {
-  const unsubscribe = this.#subscriptions.get(handler);
-  if (unsubscribe) {
-    unsubscribe();
-    this.#subscriptions.delete(handler);
-    this.#subscriberFns.delete(handler);
-  }
+   const unsubscribe = this.#subscriptions.get(handler); // Retrieves the unsubscribe function for the handler
+   if (unsubscribe) {
+      unsubscribe(); // Removes the handler from the dispatcher
+      this.#subscriptions.delete(handler); // Clears the handler from subscriptions map
+      this.#subscriberFns.delete(handler); // Removes handler from tracking set
+   }
 }
 ```
 
@@ -123,22 +125,22 @@ router.unsubscribe(handler); // Stops notifications
 - Listens for `popstate` events to handle browser back/forward navigation.
 - Matches the current route using `#matchCurrentRoute`.
 
-**Where it’s used**: Called by `createApp` during `mount`.
-
 **Code**:
 ```javascript
 async init() {
-  if (this.#isInitialized) {
-    return;
-  }
-  if (document.location.hash === '') {
-    window.history.replaceState({}, '', '#/');
-  }
-  window.addEventListener('popstate', this.#onPopState);
-  await this.#matchCurrentRoute();
-  this.#isInitialized = true;
+   if (this.#isInitialized) { // Prevents re-initialization
+      return;
+   }
+   if (document.location.hash === '') { // Checks if URL hash is empty
+      window.history.replaceState({}, '', '#/'); // Sets default hash to '#/' for consistent routing
+   }
+   window.addEventListener('popstate', this.#onPopState); // Listens for browser back/forward navigation
+   await this.#matchCurrentRoute(); // Matches and navigates to the current route
+   this.#isInitialized = true; // Marks router as initialized
 }
 ```
+**Where it’s used**: Called by `createApp` during `mount`.
+
 
 **Example**:
 ```javascript
@@ -159,12 +161,12 @@ app.mount(document.getElementById('app')); // Calls router.init()
 **Code**:
 ```javascript
 destroy() {
-  if (!this.#isInitialized) {
-    return;
-  }
-  window.removeEventListener('popstate', this.#onPopState);
-  Array.from(this.#subscriberFns.forEach(this.unsubscribe, this));
-  this.#isInitialized = false;
+   if (!this.#isInitialized) { // Ensures router is initialized before cleanup
+      return;
+   }
+   window.removeEventListener('popstate', this.#onPopState); // Stops listening for browser navigation events
+   Array.from(this.#subscriberFns.forEach(this.unsubscribe, this)); // Unsubscribes all route change handlers
+   this.#isInitialized = false; // Marks router as uninitialized
 }
 ```
 
@@ -182,11 +184,11 @@ app.unmount(); // Calls router.destroy()
 **Code**:
 ```javascript
 get #currentRouteHash() {
-  const hash = document.location.hash;
-  if (hash === '') {
-    return '/';
-  }
-  return hash.slice(1);
+   const hash = document.location.hash; // Gets the current URL hash
+   if (hash === '') { // Checks if hash is empty
+      return '/'; // Returns default path for empty hash
+   }
+   return hash.slice(1); // Removes '#' and returns the path
 }
 ```
 
@@ -280,30 +282,30 @@ get query() {
 **Code**:
 ```javascript
 async navigateTo(path) {
-  const matcher = this.#matchers.find((matcher) => matcher.checkMatch(path));
-  if (matcher === null) {
-    console.warn(`[Router] No route matches path "${path}`);
-    this.#matchedRoute = null;
-    this.#params = {};
-    this.#query = {};
-    return;
-  }
-  if (matcher.isRedirect) {
-    return this.navigateTo(matcher.route.redirect);
-  }
-  const from = this.#matchedRoute;
-  const to = matcher.route;
-  const { shouldNavigate, shouldRedirect, redirectPath } = await this.#canChangeRoute(from, to);
-  if (shouldRedirect) {
-    return this.navigateTo(redirectPath);
-  }
-  if (shouldNavigate) {
-    this.#matchedRoute = matcher.route;
-    this.#params = matcher.extractParams(path);
-    this.#query = matcher.extractQuery(path);
-    this.#pushState(path);
-    this.#dispatcher.dispatch(ROUTER_EVENT, { from, to, router: this});
-  }
+   const matcher = this.#matchers.find((matcher) => matcher.checkMatch(path)); // Finds a matcher for the path
+   if (matcher === null) { // Checks if no route matches
+      console.warn(`[Router] No route matches path "${path}"`); // Logs warning for unmatched route
+      this.#matchedRoute = null; // Clears current route
+      this.#params = {}; // Clears parameters
+      this.#query = {}; // Clears query parameters
+      return;
+   }
+   if (matcher.isRedirect) { // Checks if route is a redirect
+      return this.navigateTo(matcher.route.redirect); // Navigates to redirect path
+   }
+   const from = this.#matchedRoute; // Stores current route for guard
+   const to = matcher.route; // Gets target route
+   const { shouldNavigate, shouldRedirect, redirectPath } = await this.#canChangeRoute(from, to); // Checks navigation permissions
+   if (shouldRedirect) { // Handles redirect from guard
+      return this.navigateTo(redirectPath); // Navigates to redirect path
+   }
+   if (shouldNavigate) { // Proceeds if navigation is allowed
+      this.#matchedRoute = matcher.route; // Sets new matched route
+      this.#params = matcher.extractParams(path); // Extracts route parameters
+      this.#query = matcher.extractQuery(path); // Extracts query parameters
+      this.#pushState(path); // Updates browser URL
+      this.#dispatcher.dispatch(ROUTER_EVENT, { from, to, router: this }); // Notifies subscribers of route change
+   }
 }
 ```
 
@@ -371,34 +373,18 @@ router.forward(); // Goes to next page
 **Code**:
 ```javascript
 async #canChangeRoute(from, to) {
-  const guard = to.beforeEnter;
-  if (typeof guard !== 'function') {
-    return {
-      shouldRedirect: false,
-      shouldNavigate: true,
-      redirectPath: null,
-    }
-  }
-  const result = await guard(from?.path, to?.path);
-  if (result === false) {
-    return {
-      shouldRedirect: false,
-      shouldNavigate: false,
-      redirectPath: null,
-    }
-  }
-  if (typeof result === 'string') {
-    return {
-      shouldRedirect: true,
-      shouldNavigate: false,
-      redirectPath: result,
-    }
-  }
-  return {
-    shouldRedirect: false,
-    shouldNavigate: true,
-    redirectPath: null,
-  }
+   const guard = to.beforeEnter; // Gets the beforeEnter guard function
+   if (typeof guard !== 'function') { // Checks if guard is defined
+      return { shouldRedirect: false, shouldNavigate: true, redirectPath: null }; // Allows navigation by default
+   }
+   const result = await guard(from?.path, to?.path); // Calls guard with current and target paths
+   if (result === false) { // Checks if guard blocks navigation
+      return { shouldRedirect: false, shouldNavigate: false, redirectPath: null }; // Blocks navigation
+   }
+   if (typeof result === 'string') { // Checks if guard returns a redirect path
+      return { shouldRedirect: true, shouldNavigate: false, redirectPath: result }; // Triggers redirect
+   }
+   return { shouldRedirect: false, shouldNavigate: true, redirectPath: null }; // Allows navigation
 }
 ```
 
@@ -460,20 +446,20 @@ This file defines `RouterLink` and `RouterOutlet`, components for navigation and
 **Code**:
 ```javascript
 render() {
-  const { to } = this.props;
-  return h(
-    'a',
-    {
-      href: to,
-      on: {
-        click: (e) => {
-          e.preventDefault();
-          this.appContext.router.navigateTo(to);
-        },
-      },
-    },
-    [hSlot()]
-  )
+   const { to } = this.props; // Gets the target path from props
+   return h(
+           'a',
+           {
+              href: to, // Sets the link’s href attribute
+              on: {
+                 click: (e) => { // Attaches click event handler
+                    e.preventDefault(); // Prevents default browser navigation
+                    this.appContext.router.navigateTo(to); // Navigates to the target path
+                 },
+              },
+           },
+           [hSlot()] // Allows custom content via slot
+   );
 }
 ```
 
@@ -495,16 +481,16 @@ h(RouterLink, { to: '/about' }, ['Go to About']);
 **Code**:
 ```javascript
 onMounted() {
-  const subscription = this.appContext.router.subscribe(({ to }) => {
-    this.handleRouteChange(to);
-  })
-  this.updateState({ subscription });
+   const subscription = this.appContext.router.subscribe(({ to }) => { // Subscribes to route changes
+      this.handleRouteChange(to); // Updates state with new route
+   });
+   this.updateState({ subscription }); // Stores subscription in state
 }
 render() {
-  const { matchedRoute } = this.state;
-  return h('div', { id: 'router-outlen' }, [
-    matchedRoute ? h(matchedRoute.componenet) : null,
-  ])
+   const { matchedRoute } = this.state; // Gets current route from state
+   return h('div', { id: 'router-outlen' }, [ // Renders a container div
+      matchedRoute ? h(matchedRoute.componenet) : null, // Renders route component or null
+   ]);
 }
 ```
 
@@ -562,10 +548,10 @@ routeHasParams({ path: '/user/:id' }); // true
 **Code**:
 ```javascript
 function makeRouteWithoutParamsRegex({ path }) {
-  if (path === CATCH_ALL_ROUTE) {
-    return new RegExp('^.*$');
-  }
-  return new RegExp(`^${path}$`);
+   if (path === CATCH_ALL_ROUTE) { // Checks for catch-all route
+      return new RegExp('^.*$'); // Matches any path
+   }
+   return new RegExp(`^${path}$`); // Creates exact-match regex for path
 }
 ```
 
@@ -580,19 +566,19 @@ makeRouteWithoutParamsRegex({ path: '/about' }); // /^\/about$/
 **Code**:
 ```javascript
 function makeMatcherWithoutParams(route) {
-  const regex = makeRouteWithoutParamsRegex(route);
-  const isRedirect = typeof route.redirect === 'string';
-  return {
-    route,
-    isRedirect,
-    checkMatch(path) {
-      return regex.test(path);
-    },
-    extractParams() {
-      return {};
-    },
-    extractQuery,
-  }
+   const regex = makeRouteWithoutParamsRegex(route); // Creates regex for static route
+   const isRedirect = typeof route.redirect === 'string'; // Checks if route is a redirect
+   return {
+      route, // Stores the route object
+      isRedirect, // Indicates if it’s a redirect
+      checkMatch(path) { // Tests if path matches regex
+         return regex.test(path);
+      },
+      extractParams() { // Returns empty params for static routes
+         return {};
+      },
+      extractQuery, // Includes query parsing function
+   };
 }
 ```
 
@@ -608,12 +594,12 @@ matcher.checkMatch('/about'); // true
 **Code**:
 ```javascript
 function extractQuery(path) {
-  const queryIndex = path.indexOf('?');
-  if (queryIndex === -1) {
-    return {};
-  }
-  const search = new URLSearchParams(path.slice(queryIndex + 1));
-  return Object.fromEntries(search.entries());
+   const queryIndex = path.indexOf('?'); // Finds query string start
+   if (queryIndex === -1) { // Checks if no query string exists
+      return {}; // Returns empty object
+   }
+   const search = new URLSearchParams(path.slice(queryIndex + 1)); // Parses query string
+   return Object.fromEntries(search.entries()); // Converts to object
 }
 ```
 
@@ -644,20 +630,20 @@ makeRouteWithParamsRegex({ path: '/user/:id' }); // /^\/user\/(?<id>[^/]+)$/
 **Code**:
 ```javascript
 function makeMatcherWithParams(route) {
-  const regex = makeRouteWithParamsRegex(route);
-  const isRedirect = typeof route.redirect === 'string';
-  return {
-    route,
-    isRedirect,
-    checkMatch(path) {
-      return regex.test(path);
-    },
-    extractParams(path) {
-      const { groups } = regex.exec(path);
-      return groups;
-    },
-    extractQuery,
-  }
+   const regex = makeRouteWithParamsRegex(route); // Creates regex for dynamic route
+   const isRedirect = typeof route.redirect === 'string'; // Checks if route is a redirect
+   return {
+      route, // Stores the route object
+      isRedirect, // Indicates if it’s a redirect
+      checkMatch(path) { // Tests if path matches regex
+         return regex.test(path);
+      },
+      extractParams(path) { // Extracts parameters from path
+         const { groups } = regex.exec(path); // Gets named groups from regex match
+         return groups; // Returns parameter object
+      },
+      extractQuery, // Includes query parsing function
+   };
 }
 ```
 
@@ -708,39 +694,39 @@ matcher.extractParams('/user/123'); // { id: '123' }
 import { createApp, defineComponent, h, RouterLink, RouterOutlet, HashRouter } from './framework';
 
 const Home = defineComponent({
-  render() {
-    return h('h1', {}, ['Home Page']);
-  },
+   render() {
+      return h('h1', {}, ['Home Page']); // Renders home page title
+   },
 });
 
 const UserProfile = defineComponent({
-  render() {
-    return h('div', {}, [
-      h('h1', {}, [`User: ${this.appContext.router.params.id}`]),
-      h('p', {}, [`Query: ${JSON.stringify(this.appContext.router.query)}`]),
-    ]);
-  },
+   render() {
+      return h('div', {}, [
+         h('h1', {}, [`User: ${this.appContext.router.params.id}`]), // Displays user ID from params
+         h('p', {}, [`Query: ${JSON.stringify(this.appContext.router.query)}`]), // Displays query params
+      ]);
+   },
 });
 
 const App = defineComponent({
-  render() {
-    return h('div', {}, [
-      h(RouterLink, { to: '/' }, ['Home']),
-      h(RouterLink, { to: '/user/123?name=John' }, ['User Profile']),
-      h(RouterOutlet),
-    ]);
-  },
+   render() {
+      return h('div', {}, [
+         h(RouterLink, { to: '/' }, ['Home']), // Link to home page
+         h(RouterLink, { to: '/user/123?name=John' }, ['User Profile']), // Link to user profile
+         h(RouterOutlet), // Renders current route’s component
+      ]);
+   },
 });
 
 const router = new HashRouter([
-  { path: '/', component: Home },
-  { path: '/user/:id', component: UserProfile, beforeEnter: async (from, to) => {
-    return to === '/user/123' ? true : '/'; // Redirect unless ID is 123
-  } },
+   { path: '/', component: Home }, // Defines home route
+   { path: '/user/:id', component: UserProfile, beforeEnter: async (from, to) => {
+         return to === '/user/123' ? true : '/'; // Redirects unless ID is 123
+      } },
 ]);
 
-const app = createApp(App, {}, { router });
-app.mount(document.getElementById('app'));
+const app = createApp(App, {}, { router }); // Creates app with router
+app.mount(document.getElementById('app')); // Mounts app and initializes router
 ```
 
 **Explanation**:

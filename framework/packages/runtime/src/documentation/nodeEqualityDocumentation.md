@@ -1,4 +1,4 @@
-# Virtual node equality
+# The nodes-equal.js Documentation
 
 You want to know when `two virtual nodes` are `equal` so that you can reuse the existing DOM node.
 Reusing an existing DOM node and patching its properties is much more `efficient` than `destroying` it and mounting a new one, so you want to `reuse nodes as much as possible.`
@@ -68,7 +68,7 @@ The downside is that developers must provide unique `key` attributes. Using list
 
 The `areNodesEqual()` function checks if two virtual nodes are equal based on the rules above. It’s like a referee that decides whether a DOM node can be reused or needs to be replaced during an update.
 
-This function is crucial for efficient DOM updates. It first checks if the nodes have the same `type`. If they do, it applies specific rules: for element nodes, it compares their tags and `key` attributes; for component nodes, it compares their prototypes (e.g., the same `Counter` class) and `key` attributes; for text and fragment nodes, it considers them equal. This ensures the framework reuses nodes when possible, making updates faster and more accurate.
+This function first checks if the nodes have the same `type`. If they do, it applies specific rules: for element nodes, it compares their tags and `key` attributes; for component nodes, it compares their prototypes (e.g., the same `Counter` class) and `key` attributes; for text and fragment nodes, it considers them equal. This ensures the framework reuses nodes when possible, making updates faster and more accurate.
 
 ```javascript
 import { DOM_TYPES } from "./h";

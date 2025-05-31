@@ -1,4 +1,4 @@
-# The patch-dom.js Explanation
+# The patch-dom.js Documentation
 
 The `patch-dom.js` module is a key part of our web framework, responsible for updating the real Document Object Model `(DOM)` to match changes in the `virtual DOM`. In a web app, the virtual DOM represents the structure of your UI, like a `<form>` with an `<input>` and a `<button>`. When the app’s state changes (e.g., a user types invalid text, triggering an error message), the virtual DOM updates, and `patchDOM()` ensures the real DOM reflects these changes efficiently without rebuilding everything from scratch.
 

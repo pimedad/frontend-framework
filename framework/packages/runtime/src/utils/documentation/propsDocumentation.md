@@ -1,4 +1,4 @@
-# The props.js Explanation
+# The props.js Documentation
 
 The `props.js` utility module helps our web framework manage components by separating their properties (`props`) and event listeners (`events`). In a web app, components are reusable UI pieces, like a custom button or a form. Each component has `props` (data like a button’s label or a form’s ID) and `events` (actions like what happens when a button is clicked). The `props.js` module provides a function to extract these cleanly from a virtual DOM node, making it easier to work with components when mounting or updating them.
 
@@ -14,7 +14,7 @@ This separation is used in functions like `createComponentNode()` (when creating
 
 Here’s the code:
 
-```
+```javascript
 export function extractPropsAndEvents(vdom) {
   const { on: events = {}, ...props } = vdom.props; // Split props and events
   delete props.key; // Remove key prop for keyed lists

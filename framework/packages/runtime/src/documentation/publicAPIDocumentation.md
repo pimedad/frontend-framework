@@ -1,4 +1,4 @@
-# Public API Documentation: `index.js`
+# The index.js Documentation: Public API
 
 This document describes the purpose and role of the `index.js` file in the DotJS frontend framework. As the primary entry point, `index.js` defines the <ins>**public API**</ins>, exporting the core functions and components that developers can use to build and manage single-page applications (`SPAs`). The goal is to provide an interface for creating applications, defining components, rendering virtual DOM nodes, implementing client-side routing, and scheduling tasks.
 

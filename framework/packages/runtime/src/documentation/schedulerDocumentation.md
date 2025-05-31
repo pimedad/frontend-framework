@@ -1,17 +1,36 @@
-# Scheduler Documentation
+# The scheduler.js Documentation
 
 This document explains the `scheduler.js` file, which manages the execution of tasks (called "jobs") in a web application, specifically for lifecycle hooks like `onMounted()` and `onUnmounted()`. The scheduler ensures these tasks run in the correct order and at the right time, using the browser's **microtask queue**. It also handles cases where tasks might be asynchronous (like promises) and prevents errors from stopping the application.
 
 The code is used in a frontend framework to schedule tasks when components are added to or removed from the DOM (Document Object Model). Below, we describe each function, how it works, and where it’s used.
 
+---
 ## Overview
 
 The scheduler is like a to-do list manager for the framework. It collects tasks (jobs) that need to be done, such as running `onMounted()` when a component is added to the page or `onUnmounted()` when it’s removed. These tasks are stored in a list and executed in order when the browser is ready, using the **microtask queue**. This ensures tasks run after the main code (like `mountDOM()`) finishes, keeping everything organized and efficient.
 
 The scheduler also prevents scheduling the same task multiple times and handles errors if a task fails, so the application doesn’t crash.
 
-
+---
 ## Functions in `scheduler.js`
+
+### State Variables
+
+**What they do**: Define the scheduler’s internal state to track jobs and scheduling status.
+
+**How they work**:
+- `isScheduled`: A boolean flag to prevent multiple scheduling of the same task batch.
+- `jobs`: An array to store queued tasks for ordered execution.
+
+**Code**:
+```javascript
+let isScheduled = false; // Tracks if jobs are scheduled to avoid duplicate scheduling
+const jobs = []; // Stores jobs (functions) to be executed in order
+```
+
+**Where they’re used**: Across all scheduler functions to manage task queuing and execution.
+
+>**Why they’re important**: These variables ensure jobs are queued and processed only once, maintaining efficiency and order.
 
 ### `enqueueJob(job)`
 
@@ -33,9 +52,20 @@ This function adds a task (called a "job") to a list and tells the scheduler to 
   enqueueJob(() => vdom.component.onUnmounted());
   ```
 
-#### Why it’s important
-This function ensures that lifecycle hooks (like `onMounted()` or `onUnmounted()`) are added to the queue and run at the right time, after the DOM is updated.
+**Code**:
+```javascript
+export function enqueueJob(job) {
+  jobs.push(job); // Adds the job to the end of the queue for ordered execution
+  scheduleUpdate(); // Triggers scheduling of job processing
+}
+```
 
+**Example**:
+```javascript
+enqueueJob(() => component.onMounted()); // Queues onMounted hook
+```
+
+>**Why it’s important**: Ensures lifecycle hooks are queued for execution after DOM updates, maintaining proper component lifecycle timing.
 
 ### `scheduleUpdate()`
 
@@ -52,9 +82,21 @@ This function plans when the jobs in the queue should run by scheduling them in 
 - It’s called by `enqueueJob()` every time a new job is added to the queue.
 - It’s also called by `nextTick()` to force the scheduler to process jobs immediately.
 
-#### Why it’s important
-This function prevents the scheduler from being scheduled multiple times, which could cause unnecessary work. It also ensures jobs run at the right time using the microtask queue.
+**Code**:
+```javascript
+function scheduleUpdate() {
+  if (isScheduled) return; // Prevents scheduling if already queued
+  isScheduled = true; // Marks scheduler as active
+  queueMicrotask(processJobs); // Schedules processJobs in microtask queue
+}
+```
 
+**Example**:
+```javascript
+enqueueJob(() => console.log('Mounted')); // Triggers scheduleUpdate
+```
+
+>**Why it’s important**: Prevents duplicate scheduling and ensures jobs run after the current task (e.g., DOM updates), using the microtask queue for optimal timing.
 
 ### `processJobs()`
 
@@ -75,8 +117,27 @@ This function runs all the jobs in the queue one by one.
 - It’s called automatically by the browser’s microtask queue when `scheduleUpdate()` uses `queueMicrotask(processJobs)`.
 - It processes jobs like `onMounted()` and `onUnmounted()` added by `enqueueJob()`.
 
-#### Why it’s important
-This function ensures all jobs run in the correct order and handles errors so the application doesn’t crash if a job fails. It also clears the queue and resets the scheduler for future tasks.
+**Code**:
+```javascript
+function processJobs() {
+  while (jobs.length > 0) { // Continues until all jobs are processed
+    const job = jobs.shift(); // Removes and retrieves the first job
+    const result = job(); // Executes the job
+    Promise.resolve(result).then( // Wraps result in a promise for async handling
+      () => {}, // No action needed on success
+      (error) => { console.error(`[scheduler]: ${error}`); } // Logs errors without halting
+    );
+  }
+  isScheduled = false; // Resets scheduler for new jobs
+}
+```
+
+**Example**:
+```javascript
+enqueueJob(() => console.log('Job 1')); // Queued and processed by processJobs
+```
+
+>**Why it’s important**: This function ensures all jobs run in the correct order and handles errors so the application doesn’t crash if a job fails. It also clears the queue and resets the scheduler for future tasks.
 
 
 ### `nextTick()`
@@ -92,8 +153,20 @@ This function schedules an immediate update and returns a promise that resolves 
 #### Where it’s used
 - It’s not directly used in the provided code, but it’s exported for other parts of the framework. For example, it could be used to wait for all `onMounted()` hooks to finish before running other code.
 
-#### Why it’s important
-This function lets developers wait for all scheduled jobs to complete, which is useful for coordinating tasks that depend on lifecycle hooks finishing.
+**Code**:
+```javascript
+export function nextTick() {
+  scheduleUpdate(); // Schedules job processing
+  return flushPromises(); // Returns promise resolving after microtasks
+}
+```
+
+**Example**:
+```javascript
+nextTick().then(() => console.log('All jobs done')); // Waits for jobs to complete
+```
+
+>**Why it’s important**: This function lets developers wait for all scheduled jobs to complete, which is useful for coordinating tasks that depend on lifecycle hooks finishing.
 
 
 ### `flushPromises()`
@@ -108,9 +181,19 @@ This function creates a promise that resolves after a short delay, ensuring all 
 #### Where it’s used
 - It’s called by `nextTick()` to ensure the returned promise resolves after all jobs are processed.
 
-#### Why it’s important
-This function helps `nextTick()` wait for all scheduled jobs to finish, making it easier to coordinate tasks in the framework.
+**Code**:
+```javascript
+function flushPromises() {
+  return new Promise((resolve) => setTimeout(resolve)); // Resolves after next event loop cycle
+}
+```
 
+**Example**:
+```javascript
+flushPromises().then(() => console.log('Microtasks done')); // Waits for microtasks
+```
+
+>**Why it’s important**: Ensures `nextTick()` resolves only after all scheduled jobs are processed, enabling proper task coordination.
 
 ## How the Scheduler Works Together
 

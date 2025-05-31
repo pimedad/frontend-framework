@@ -1,4 +1,4 @@
-# The h() function
+# The h.js Documentation
 
 The name `h()` is short for `hyperscript`, a script that creates `hypertext`. The name `h()` for the function is a common one used in some frontend frameworks, probably because it’s short and easy to type, which is important because you’ll be using it often.
 

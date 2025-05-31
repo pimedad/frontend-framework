@@ -1,4 +1,5 @@
-# Mounting the virtual DOM
+# The mount-dom.js Documentation 
+
 Given a `virtual DOM tree`, you want your `framework` to create the real `DOM` tree from  it and attach it to the browser’s document. We call this process **`mounting the virtual DOM.`**
 
 For example if we define a `virtual DOM`, we define its as

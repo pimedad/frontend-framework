@@ -1,4 +1,4 @@
-# The dispatcher
+# The dispatcher.js Documentation
 
 If the application developer wants to update the state when a particular event is `dispatched`, first they need to determine what that `event` means in terms of the application domain. 
 Then the developer maps the event to a `command` that the framework can understand. A `command` is a request to do something, as opposed to an `event`, which is a notification of something that has happened. 
@@ -68,7 +68,7 @@ This method is needed to keep the webpage in sync with the state. Since commands
 
 The `dispatch()` method is the heart of the `Dispatcher`. It takes a command name and its payload (extra data, like the index of a to-do item) and runs all the handlers registered for that command. It’s like a mail carrier delivering a message to the right recipients.
 
-This method is crucial because it triggers the actual work of updating the state. It looks up the handlers for the given command in the `#subs` Map, calls each one with the payload, and then runs all the `afterEveryCommand` handlers to notify the renderer. If no handlers are found for a command, it shows a warning in the console to help developers catch mistakes, like misspelling a command name.
+This method is important because it triggers the actual work of updating the state. It looks up the handlers for the given command in the `#subs` Map, calls each one with the payload, and then runs all the `afterEveryCommand` handlers to notify the renderer. If no handlers are found for a command, it shows a warning in the console to help developers catch mistakes, like misspelling a command name.
 
 Here’s the complete `Dispatcher` class implementation:
 

@@ -1,4 +1,4 @@
-# Setting the attributes
+# The attributes.js Documentation
 
 When set an attribute on an HTML element in code, we update its corresponding property, like `id` or `class`. This change is reflected in the HTML markup shown in the browser. For example, if we have a `<p>` element with `id="foo"` and change it to `p.id = "bar"`, the HTML updates to `<p id="bar">`. Most properties work this way, but some, like the value attribute of an `<input>`, don’t show in the HTML even when set. For instance, setting `input.value = "yolo"` shows `"yolo"` in the input, but the HTML stays `<input type="text">`. We can read the current `input` value from the value property.
 
@@ -97,7 +97,7 @@ export function setAttribute(el, name, value) {
 
 The `removeAttribute()` function removes a single attribute from a DOM element. It’s like deleting a setting from an element, such as removing its `id` or a custom `data-*` attribute, so it no longer applies.
 
-This function is crucial for cleaning up elements when their attributes are no longer needed, like when updating or destroying the DOM. It sets the element’s property to `null` and calls the DOM’s `removeAttribute()` method to ensure the attribute is completely removed from the HTML. This prevents leftover attributes from causing issues in your webpage.
+This function is responsible for cleaning up elements when their attributes are no longer needed, like when updating or destroying the DOM. It sets the element’s property to `null` and calls the DOM’s `removeAttribute()` method to ensure the attribute is completely removed from the HTML. This prevents leftover attributes from causing issues in your webpage.
 
 ```javascript
 export function removeAttribute(el, name) {

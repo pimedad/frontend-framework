@@ -1,4 +1,4 @@
-# Traverse DOM and Slots Documentation
+# The slots.js & traverse-dom.js Documentation 
 
 This document describes the purpose, role, and functions of the `traverse-dom.js` and `slots.js` files in the DotJS frontend framework. These utilities are made for managing the virtual DOM and enabling flexible component composition through slots. The documentation provides explanations of each function, practical examples, and details on where these utilities are used within the framework, ensuring developers can effectively use them into their projects.
 
