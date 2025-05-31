@@ -70,7 +70,7 @@ Before installing the DotJS framework, ensure you have the following tools insta
 
 
 ## [Quick Start](./framework/packages/runtime/src/documentation/QuickStart.md)
-> **Note**: This framework is for **educational purposes only** and not intended for production use. Ensure you have followed the [Installation Instructions](installation.md) before proceeding.
+> **Note**: This framework is for **educational purposes only** and not intended for production use. Ensure you have followed the [Installation Instructions](./framework/packages/runtime/src/documentation/Installation.md) before proceeding.
 
 
 ---
