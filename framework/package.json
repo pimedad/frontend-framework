@@ -3,8 +3,6 @@
   "version": "0.0.1",
   "description": "The DotJS frontend framework.",
   "workspaces": [
-    "packages/compiler",
-    "packages/loader",
     "packages/runtime"
   ],
   "private": true
