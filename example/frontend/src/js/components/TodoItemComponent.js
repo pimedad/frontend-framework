@@ -1,4 +1,4 @@
-import { defineComponent, h, hSlot } from "frontend-framework";
+import { defineComponent, h } from "frontend-framework";
 
 export default defineComponent({
   props: {
@@ -37,6 +37,23 @@ export default defineComponent({
         this.methods.handleCancelEdit.call(this);
       }
     },
+    handleViewClick(event) {
+      if (event.target.classList.contains("toggle")) {
+        return;
+      }
+      if (event.target.classList.contains("destroy")) {
+        event.stopPropagation();
+        this.props.onRemove();
+        return;
+      }
+      if (event.target.tagName === "LABEL") {
+        return;
+      }
+    },
+    handleContextMenu(event) {
+      event.preventDefault();
+      console.log("Context menu prevented for todo:", this.props.todo.title);
+    },
   },
   render() {
     const { todo } = this.props;
@@ -60,24 +77,33 @@ export default defineComponent({
     }
 
     return h("li", { class: liClass, "data-id": todo.id }, [
-      h("div", { class: "view" }, [
-        h("input", {
-          class: "toggle",
-          type: "checkbox",
-          checked: todo.completed,
-          on: { change: () => this.props.onToggle() },
-        }),
-        h(
-          "label",
-          { on: { dblclick: this.methods.handleDoubleClick.bind(this) } },
-          [todo.title]
-        ),
-        h("button", {
-          class: "destroy",
-          on: { click: () => this.props.onRemove() },
-        }),
-        hSlot([h("em", {}, [" (default slot content)"])]),
-      ]),
+      h(
+        "div",
+        {
+          class: "view"
+        },
+        [
+          h("input", {
+            class: "toggle",
+            type: "checkbox",
+            checked: todo.completed,
+            on: { change: () => this.props.onToggle() },
+          }),
+          h(
+            "label",
+            { on: { dblclick: this.methods.handleDoubleClick.bind(this) } },
+            [todo.title]
+          ),
+          h(
+            "button",
+            {
+              class: "destroy",
+              on: { click: () => this.props.onRemove() },
+            },
+            ["×"]
+          )
+        ]
+      ),
     ]);
   },
 });

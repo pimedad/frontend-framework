@@ -202,21 +202,7 @@ export default defineComponent({
             onToggle: () => todoHandlers.toggleItem(todo.id),
             onRemove: () => todoHandlers.removeItem(todo.id),
             onSave: (newTitle) => todoHandlers.editItem(todo.id, newTitle),
-          },
-          [
-            h(
-              "span",
-              {
-                style: {
-                  "font-size": "0.8em",
-                  "margin-left": "10px",
-                  color: "grey",
-                },
-              },
-              [`ID: ${todo.id}`]
-            ),
-          ]
-        )
+          })
         ),
       ]);
     };
