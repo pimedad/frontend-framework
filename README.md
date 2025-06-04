@@ -124,4 +124,12 @@ To build applications with DotJS, follow these guidelines:
 
 ---
 
-*Built by the Blind Dating App Team Ⓒ. Start building your next web app today!*
+## Installation Instructions
+
+See the [example/README.md](./example/README.md) for detailed setup instructions.
+
+If you want to actually develop the framework, it isn't really different, make changes to the framework files, and run pnpm build to rebuild it.
+
+---
+
+*Built by the Blind Dating App Team. Start building your next web app today!*
