@@ -395,3 +395,8 @@ h1 {
 .info a:hover {
     text-decoration: underline;
 }
+
+.about {
+  color: blue !important;
+  text-decoration: underline !important;
+}
