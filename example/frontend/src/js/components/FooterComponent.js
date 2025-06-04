@@ -53,6 +53,14 @@ export default defineComponent({
           ),
         ]),
       ]),
+      h(
+        RouterLink,
+        {
+          to: "/about",
+          class: "about-link",
+        },
+        ["About"]
+      ),
       completedCount > 0
         ? h(
             "button",
