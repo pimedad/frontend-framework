@@ -1,0 +1,9 @@
+{
+  "name": "frontend-framework-monorepo",
+  "version": "0.0.1",
+  "private": true,
+  "description": "Custom frontend framework monorepo with example application",
+  "scripts": {
+    "build": "pnpm --filter frontend-framework build"
+  }
+}
