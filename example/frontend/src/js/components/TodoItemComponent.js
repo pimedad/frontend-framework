@@ -80,14 +80,17 @@ export default defineComponent({
       h(
         "div",
         {
-          class: "view"
+          class: "view",
+          on: {
+            click: this.methods.handleViewClick.bind(this),
+            contextmenu: this.methods.handleContextMenu.bind(this),
+          },
         },
         [
           h("input", {
             class: "toggle",
             type: "checkbox",
             checked: todo.completed,
-            on: { change: () => this.props.onToggle() },
           }),
           h(
             "label",
@@ -98,10 +101,9 @@ export default defineComponent({
             "button",
             {
               class: "destroy",
-              on: { click: () => this.props.onRemove() },
             },
             ["×"]
-          )
+          ),
         ]
       ),
     ]);
