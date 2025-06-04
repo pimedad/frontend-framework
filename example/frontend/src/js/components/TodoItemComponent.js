@@ -91,6 +91,7 @@ export default defineComponent({
             class: "toggle",
             type: "checkbox",
             checked: todo.completed,
+            on: { change: () => this.props.onToggle() },
           }),
           h(
             "label",
