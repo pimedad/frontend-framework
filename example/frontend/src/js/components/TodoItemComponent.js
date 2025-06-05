@@ -13,6 +13,9 @@ export default defineComponent({
       editText: "",
     };
   },
+  onUnmounted() {
+    console.log(`Todo ${this.props.todo.title} was removed.`);
+  },
   methods: {
     handleDoubleClick() {
       this.updateState({ editing: true, editText: this.props.todo.title });
