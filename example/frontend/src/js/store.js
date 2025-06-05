@@ -4,11 +4,29 @@ export class Store {
 
     constructor(name ) {
         this._dbName = name;
+        this.commands = {};
+        this.afterEveryCommand = [];
+    }
+
+    subscribe(command, handler) {
+      this.commands[command] = handler;
+    }
+
+    dispatch(command, payload) {
+      if (this.commands[command]) {
+        this.commands[command](payload);
+        this.afterEveryCommand.forEach(hook => hook());
+      }
+    }
+
+    addAfterCommandHook(hook) {
+      this.afterEveryCommand.push(hook);
     }
 
     async findAll() {
         try {
             const items = await http.get('');
+            this.dispatch('TODOS_LOADED', items);
             return items || [];
         } catch (error) {
             console.error("Store.findAll: Error fetching items:", error);
@@ -24,9 +42,11 @@ export class Store {
                 if (itemData.title !== undefined) updatePayload.title = itemData.title;
                 if (itemData.completed !== undefined) updatePayload.completed = itemData.completed;
                 savedOrUpdatedItem = await http.put(`/${idToUpdate}`, updatePayload);
+                this.dispatch('TODO_UPDATED', savedOrUpdatedItem);
             } else {
                 const createPayload = { title: itemData.title };
                 savedOrUpdatedItem = await http.post('', createPayload);
+                this.dispatch('TODO_CREATED', savedOrUpdatedItem);
             }
             if (!savedOrUpdatedItem) {
                 throw new Error("Save operation returned no item.");
