@@ -198,35 +198,45 @@ export default defineComponent({
           else if (currentRouteName === "completed")
             message = "No completed tasks.";
         }
-        return h("ul", { class: "todo-list" }, [
-          h("li", { class: "todo-item-empty" }, [message]),
+        return hFragment([
+          h("ul", { class: "todo-list" }, [
+            h("li", { class: "todo-item-empty" }, [message]),
+          ]),
+          h("div", { class: "todo-tip" }, [
+            "💡 Tip: Click the input above to add your first task!"
+          ])
         ]);
       }
 
-      return h("ul", { class: "todo-list" }, [
-        ...filteredTodos.map((todo) =>
-          h(TodoItemComponent, {
-            key: todo.id,
-            todo: todo,
-            onToggle: () => todoHandlers.toggleItem(todo.id),
-            onRemove: () => todoHandlers.removeItem(todo.id),
-            onSave: (newTitle) => todoHandlers.editItem(todo.id, newTitle),
-            on: {
-              todoToggled: (event) => console.log("Todo toggled", event)
-            },
-            ref: (component) => {
-              if (component) {
-                component.methods.resetTitle();
+      return hFragment([
+        h("ul", { class: "todo-list" }, [
+          ...filteredTodos.map((todo) =>
+            h(TodoItemComponent, {
+              key: todo.id,
+              todo: todo,
+              onToggle: () => todoHandlers.toggleItem(todo.id),
+              onRemove: () => todoHandlers.removeItem(todo.id),
+              onSave: (newTitle) => todoHandlers.editItem(todo.id, newTitle),
+              on: {
+                todoToggled: (event) => console.log("Todo toggled", event)
+              },
+              ref: (component) => {
+                if (component) {
+                  component.methods.resetTitle();
+                }
               }
-            }
-          }, [
-            h("div", { class: "extra-info" }, [`Created: ${new Date().toLocaleDateString()}`])
-          ])
-        ),
+            }, [
+              h("div", { class: "extra-info" }, [`Created: ${new Date().toLocaleDateString()}`])
+            ])
+          ),
+        ]),
+        h("div", { class: "todo-stats" }, [
+          `Showing ${filteredTodos.length} ${currentRouteName} tasks`
+        ])
       ]);
     };
 
-    return h("div", { class: "todoapp-inner-container" }, [
+    return hFragment([
       h(HeaderComponent, {}),
       h("main", { class: "main" }, [
         todos.length > 0
