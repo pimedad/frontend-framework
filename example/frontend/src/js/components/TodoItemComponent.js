@@ -39,6 +39,10 @@ export default defineComponent({
     },
     handleViewClick(event) {
       if (event.target.classList.contains("toggle")) {
+        this.emit("todoToggled", { 
+          id: this.props.todo.id, 
+          completed: !this.props.todo.completed 
+        });
         return;
       }
       if (event.target.classList.contains("destroy")) {

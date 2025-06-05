@@ -202,6 +202,9 @@ export default defineComponent({
             onToggle: () => todoHandlers.toggleItem(todo.id),
             onRemove: () => todoHandlers.removeItem(todo.id),
             onSave: (newTitle) => todoHandlers.editItem(todo.id, newTitle),
+            on: {
+              todoToggled: (event) => console.log("Todo toggled", event)
+            }
           }, [
             h("div", { class: "extra-info" }, [`Created: ${new Date().toLocaleDateString()}`])
           ])
