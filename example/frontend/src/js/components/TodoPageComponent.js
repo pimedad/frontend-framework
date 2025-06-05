@@ -108,6 +108,10 @@ export default defineComponent({
       }
     },
 
+    navigateToAbout() {
+      this.appContext.router.navigateTo("/about");
+    },
+
     async handleToggleAll(completedState) {
       const store = this.appContext.store;
       const todosToUpdate = this.state.todos.filter(
