@@ -67,12 +67,21 @@ export default defineComponent({
   },
   render() {
     const { todo } = this.props;
-    const liClass = `${todo.completed ? "completed" : ""} ${
+    const liClass = [
+      todo.completed ? "completed" : "",
       this.state.editing ? "editing" : ""
-    }`;
+    ].filter(Boolean).join(" ");
+
+    const liStyle = {
+      backgroundColor: todo.completed ? "var(--muted)" : "var(--background)",
+      transition: "background-color 0.3s"
+    }
 
     if (this.state.editing) {
-      return h("li", { class: liClass, "data-id": todo.id }, [
+      return h("li", { 
+        class: liClass,
+        style: liStyle,
+        "data-id": todo.id }, [
         h("input", {
           class: "edit",
           type: "text",
