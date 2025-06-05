@@ -107,6 +107,7 @@ export default defineComponent({
           ),
         ]
       ),
+      hSlot("extra-info")
     ]);
   },
 });

@@ -202,7 +202,9 @@ export default defineComponent({
             onToggle: () => todoHandlers.toggleItem(todo.id),
             onRemove: () => todoHandlers.removeItem(todo.id),
             onSave: (newTitle) => todoHandlers.editItem(todo.id, newTitle),
-          })
+          }, [
+            h("div", { class: "extra-info" }, [`Created: ${new Date().toLocaleDateString()}`])
+          ])
         ),
       ]);
     };
