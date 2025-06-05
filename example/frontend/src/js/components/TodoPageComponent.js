@@ -124,8 +124,13 @@ export default defineComponent({
             store.save({ completed: completedState }, todo.id)
           )
         );
-        const allTodos = await store.findAll();
-        this.updateState({ todos: allTodos || [] });
+        this.appContext.scheduler.enqueueJob(() => {
+          this.updateState({
+            todos: this.state.todos.map((t) => 
+            t.completed !== completedState ? {...t, completed: completedState } : t
+          )
+          });
+        });
       } catch (error) {
         console.error("Error toggling all items:", error);
       }
