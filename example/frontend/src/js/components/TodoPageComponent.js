@@ -204,6 +204,11 @@ export default defineComponent({
             onSave: (newTitle) => todoHandlers.editItem(todo.id, newTitle),
             on: {
               todoToggled: (event) => console.log("Todo toggled", event)
+            },
+            ref: (component) => {
+              if (component) {
+                component.methods.resetTitle();
+              }
             }
           }, [
             h("div", { class: "extra-info" }, [`Created: ${new Date().toLocaleDateString()}`])

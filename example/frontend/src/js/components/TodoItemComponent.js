@@ -61,6 +61,9 @@ export default defineComponent({
       event.preventDefault();
       console.log("Context menu prevented for todo:", this.props.todo.title);
     },
+    resetTitle() {
+      this.updateState({ editText: this.props.todo.title });
+    }
   },
   render() {
     const { todo } = this.props;
