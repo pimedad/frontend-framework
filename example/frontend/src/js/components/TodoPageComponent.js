@@ -256,6 +256,10 @@ export default defineComponent({
         todoListComponent(),
       ]),
       todos.length > 0 ? h(FooterComponent, {}) : null,
+      h("button", {
+        class: "about-button",
+        on: { click: this.methods.navigateToAbout.bind(this) }
+      }, ["Go to About"])
     ]);
   },
 });
