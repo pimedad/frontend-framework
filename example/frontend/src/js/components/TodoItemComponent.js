@@ -1,4 +1,4 @@
-import { defineComponent, h } from "frontend-framework";
+import { defineComponent, h, hSlot } from "frontend-framework";
 
 export default defineComponent({
   props: {

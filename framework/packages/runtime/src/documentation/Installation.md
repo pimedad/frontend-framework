@@ -42,32 +42,20 @@ The example Todo application demonstrates how to use the DotJS framework with a 
 
 ### 3.1: Configure the Backend
 
-1. **Set Up PostgreSQL**:
-    - Ensure PostgreSQL is running on your machine.
-    - Create a database named `frameworktodoappdb`:
-
-      ```bash
-      psql -U postgres -c "CREATE DATABASE frameworktodoappdb;"
-      ```
-
-      > **Note**: The default username is `postgres` and password is `123`, as specified in `example/backend/src/main/resources/application.properties`. Update these credentials if your PostgreSQL setup uses different values.
-
-        >**Note:** If you are using a `PgAdmin4` client for `PostgresSQL` database creation, make sure you create a database `frameworktodoappdb` manually via its desktop application
-
-2. **Navigate to the Backend Directory**:
+1. **Navigate to the Backend Directory**:
 
    ```bash
    cd example/backend
    ```
 
-3. **Install Backend Dependencies**:
+2. **Install Backend Dependencies**:
     - The backend uses Maven for dependency management. Ensure Maven is installed or use the Maven Wrapper included in the project:
 
       ```bash
       ./mvnw install
       ```
 
-4. **Run the Backend**:
+3. **Run the Backend**:
     - Start the Spring Boot application:
 
       ```bash

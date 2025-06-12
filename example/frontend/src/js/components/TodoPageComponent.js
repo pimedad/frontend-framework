@@ -1,4 +1,4 @@
-import { defineComponent, h } from "frontend-framework";
+import { defineComponent, h, hFragment, enqueueJob } from "frontend-framework";
 import TodoItemComponent from "./TodoItemComponent.js";
 import HeaderComponent from "./HeaderComponent.js";
 import FooterComponent from "./FooterComponent.js";
@@ -124,11 +124,13 @@ export default defineComponent({
             store.save({ completed: completedState }, todo.id)
           )
         );
-        this.appContext.scheduler.enqueueJob(() => {
+        enqueueJob(() => {
           this.updateState({
-            todos: this.state.todos.map((t) => 
-            t.completed !== completedState ? {...t, completed: completedState } : t
-          )
+            todos: this.state.todos.map((t) =>
+              t.completed !== completedState
+                ? { ...t, completed: completedState }
+                : t
+            ),
           });
         });
       } catch (error) {
@@ -182,9 +184,9 @@ export default defineComponent({
     const activeCount = todoStats.active;
 
     const todoListComponent = () => {
+      let currentRouteName =
+        this.appContext.router.matchedRoute?.name?.toLowerCase() || "all";
       if (!filteredTodos || filteredTodos.length === 0) {
-        const currentRouteName =
-          this.appContext.router.matchedRoute?.name?.toLowerCase() || "all";
         let message = "No tasks here. Add one above!";
         if (currentRouteName === "active" && todos.some((t) => t.completed)) {
           message = "No active tasks.";
@@ -203,36 +205,42 @@ export default defineComponent({
             h("li", { class: "todo-item-empty" }, [message]),
           ]),
           h("div", { class: "todo-tip" }, [
-            "💡 Tip: Click the input above to add your first task!"
-          ])
+            "💡 Tip: Click the input above to add your first task!",
+          ]),
         ]);
       }
 
       return hFragment([
         h("ul", { class: "todo-list" }, [
           ...filteredTodos.map((todo) =>
-            h(TodoItemComponent, {
-              key: todo.id,
-              todo: todo,
-              onToggle: () => todoHandlers.toggleItem(todo.id),
-              onRemove: () => todoHandlers.removeItem(todo.id),
-              onSave: (newTitle) => todoHandlers.editItem(todo.id, newTitle),
-              on: {
-                todoToggled: (event) => console.log("Todo toggled", event)
+            h(
+              TodoItemComponent,
+              {
+                key: todo.id,
+                todo: todo,
+                onToggle: () => todoHandlers.toggleItem(todo.id),
+                onRemove: () => todoHandlers.removeItem(todo.id),
+                onSave: (newTitle) => todoHandlers.editItem(todo.id, newTitle),
+                on: {
+                  todoToggled: (event) => console.log("Todo toggled", event),
+                },
+                ref: (component) => {
+                  if (component) {
+                    component.methods.resetTitle();
+                  }
+                },
               },
-              ref: (component) => {
-                if (component) {
-                  component.methods.resetTitle();
-                }
-              }
-            }, [
-              h("div", { class: "extra-info" }, [`Created: ${new Date().toLocaleDateString()}`])
-            ])
+              [
+                h("div", { class: "extra-info" }, [
+                  `Created: ${new Date().toLocaleDateString()}`,
+                ]),
+              ]
+            )
           ),
         ]),
         h("div", { class: "todo-stats" }, [
-          `Showing ${filteredTodos.length} ${currentRouteName} tasks`
-        ])
+          `Showing ${filteredTodos.length} ${currentRouteName} tasks`,
+        ]),
       ]);
     };
 
@@ -251,15 +259,11 @@ export default defineComponent({
             })
           : null,
         todos.length > 0
-          ? h("label", { for: "toggle-all" }, ["Mark all as complete"])
+          ? h("label", { for: "toggle-all" }, ["Toggle all completed"])
           : null,
         todoListComponent(),
       ]),
       todos.length > 0 ? h(FooterComponent, {}) : null,
-      h("button", {
-        class: "about-button",
-        on: { click: this.methods.navigateToAbout.bind(this) }
-      }, ["Go to About"])
     ]);
   },
 });

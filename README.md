@@ -53,7 +53,7 @@ DotJS is guided by these core ideas:
 
 ## Getting Started
 
-## [Installation](./framework/packages/runtime/src/documentation/Installation.md)
+## [Installation example](./example/README.md)
 ### Prerequisites
 
 Before installing the DotJS framework, ensure you have the following tools installed:
@@ -66,12 +66,11 @@ Before installing the DotJS framework, ensure you have the following tools insta
 
 > Ensure these tools are properly installed and accessible from your terminal or command prompt.
 
-> See the [Installation Instructions](./framework/packages/runtime/src/documentation/Installation.md) for detailed setup steps.
+> See the [Installation Instructions](./example/README.md) for detailed setup steps from the example.
 
 
 ## [Quick Start](./framework/packages/runtime/src/documentation/QuickStart.md)
-> **Note**: This framework is for **educational purposes only** and not intended for production use. Ensure you have followed the [Installation Instructions](./framework/packages/runtime/src/documentation/Installation.md) before proceeding.
-
+> **Note**: This framework is for **educational purposes only** and not intended for production use.
 
 ---
 

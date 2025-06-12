@@ -30,7 +30,7 @@ npm init -y
 ```
 
 ### 1.2 Install DotJS
-Assuming you have built the DotJS framework (see [Installation Instructions](installation.md)), link it to your project:
+Assuming you have built the DotJS framework, link it to your project:
 
    ```bash
    cd /path/to/frontend-framework/framework/packages/runtime
