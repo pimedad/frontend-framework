@@ -55,4 +55,7 @@ public class TodoItemController {
         todoItemService.deleteCompletedTodoItems();
         return ResponseEntity.noContent().build();
     }
+
+    @GetMapping
+    public ResponseEntity<List<TodoItemDTO>> getTodoById(@@PathVariable Long id ) {}
 }
